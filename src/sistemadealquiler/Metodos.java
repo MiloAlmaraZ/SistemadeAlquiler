@@ -23,7 +23,7 @@ public class Metodos {
     Connection con1 = null;
      String nom;
     
-    
+    //Linea de prueba
      public Connection conectaServer() {
         Connection con = null;
         try {
