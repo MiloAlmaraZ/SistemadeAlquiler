@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package sistemadealquiler;
 
+package sistemadealquiler;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
 /**
@@ -118,7 +115,126 @@ public class Metodos {
     }
 
     
-    
-    
+      public void insertaRenta(String bd, String table, String idcuartos, String Nombre, String FechaInicio, String FechaFin) {
+
+        try {
+            Statement s = conectaBase(bd).createStatement();
+           
+            PreparedStatement ps = conectaBase(bd).prepareStatement("INSERT INTO " + table + "(idcuartos,Nombre,FechaInicio,FechaFin)values (?,?,?,?)");
+            ps.setInt(1, Integer.parseInt(idcuartos));
+            ps.setString(2, Nombre);
+            ps.setDate(3, java.sql.Date.valueOf(FechaInicio));
+            ps.setDate(4, java.sql.Date.valueOf(FechaFin));
+
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "datos insertados correctamente");
+            conectaBase(bd).close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+      
+      
+      
+      public void fechaInicio(String bd){
+         //  String SQL = "select * from USUARIOS where contrasena ='" + contraseña + "' ";
+          //Select idcuartos,fechainicio, fechafin from Renta;
+            String SQL = "select fechainicio from Renta";
+            
+             try {
+
+            Statement s = conectaBase(bd).createStatement();
+            ResultSet rs = s.executeQuery(SQL);
+            if (rs.next()) {
+
+                nom = rs.getString(1);
+
+            }
+System.out.println("Fecha inicio"+nom);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error usuario" + e);
+        }
+            
+            
+            
+      }
+      
+      
+      /*
+      public void fechaFin(String bd, LocalDate Fecha) throws SQLException{
+         Connection con2 = DriverManager.getConnection("jdbc:postgresql://localhost" + host + "/", user, pass);
+           String SQL = "select fechafin from Renta where fechafin >=? ";
+           
+            try {
+                 PreparedStatement statement = conectaBase(bd).prepareStatement(SQL); 
+
+           // Statement s = conectaBase(bd).createStatement();
+           
+           // ResultSet rs = s.executeQuery(SQL);
+             statement.setObject(1, Fecha);
+            /*if (rs.next()) {
+
+                nom = rs.getString(1);
+
+            }//
+            
+            
+            
+            LocalDate fechaVencimiento = null;
+              try (ResultSet resultSet = statement.executeQuery()) {
+                    // Procesar el resultado
+                    while (resultSet.next()) {
+                  //      int idTarea = resultSet.getInt("id");
+                    //    String nombreTarea = resultSet.getString("nombre");
+                         fechaVencimiento = resultSet.getObject("fechafin", LocalDate.class);
+                      //  System.out.println("Tarea ID: " + idTarea + ", Nombre: " + nombreTarea + ", Fecha de vencimiento: " + fechaVencimiento);
+                    }
+                }
+            
+            
+                System.out.println("Fecha fin"+fechaVencimiento);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error usuario" + e);
+        }
+
+
+
+
+
+
+
+
+
+
+      }
+    */
+      
+      
+      public void fechaFin(String bd, LocalDate Fecha) throws SQLException {
+    String jdbcUrl = "jdbc:postgresql://localhost/" + bd; // Usa el nombre de la base de datos en el jdbcUrl
+ //   String user = "tu_usuario"; // Reemplaza con el nombre de usuario de la base de datos
+   // String pass = "tu_contraseña"; // Reemplaza con la contraseña de la base de datos
+
+    String SQL = "SELECT fechainicio FROM Renta WHERE fechainicio >= ?";
+
+    try (Connection con2 = DriverManager.getConnection(jdbcUrl, user, pass);
+         PreparedStatement statement = con2.prepareStatement(SQL)) {
+
+        statement.setObject(1, Fecha);
+
+        LocalDate fechaVencimiento = null;
+        try (ResultSet resultSet = statement.executeQuery()) {
+            // Procesar el resultado
+            while (resultSet.next()) {
+                fechaVencimiento = resultSet.getObject("fechainicio", LocalDate.class);
+                System.out.println("Fecha fin: " + fechaVencimiento);
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e);
+    }
+}
     
 }

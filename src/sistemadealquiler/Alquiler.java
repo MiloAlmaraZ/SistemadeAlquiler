@@ -4,9 +4,20 @@
  * and open the template in the editor.
  */
 package sistemadealquiler;
-
+import java.util.Date;
 import java.awt.Color;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import static java.lang.Thread.sleep;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -14,9 +25,11 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,10 +40,12 @@ public class Alquiler extends javax.swing.JFrame implements Runnable{
     /**
      * Creates new form Alquiler
      */
+    DefaultTableModel modelo1= new DefaultTableModel();
     public Alquiler() {
         initComponents();
         Thread hilo1 =new Thread(this);
         hilo1.start();
+        modelo1=(DefaultTableModel)TablaContrato.getModel();
     }
     
     Metodos m=new Metodos();
@@ -38,6 +53,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable{
      static String a="DEPARTAMENTOS LOGUEN                                            DEPARTAMENTOS LOGUEN                 ";
     static String a2="                                                                                                       ";
 String hora, minutos,segundos;
+String bd="Renta1";
+String TablaRenta="Renta";
+int bandera;
+long dias;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,15 +130,15 @@ String hora, minutos,segundos;
         jTextField11 = new javax.swing.JTextField();
         jTextField13 = new javax.swing.JTextField();
         jTextField14 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        FechaFin = new com.toedter.calendar.JDateChooser();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        FechaInicio = new com.toedter.calendar.JDateChooser();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        TablaContrato = new javax.swing.JTable();
         Habitaciones = new javax.swing.JDialog();
         jPanel22 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
@@ -440,8 +459,7 @@ String hora, minutos,segundos;
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -571,6 +589,11 @@ String hora, minutos,segundos;
 
         jButton6.setBackground(new java.awt.Color(0, 102, 204));
         jButton6.setText("Guardar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
         jLabel18.setText("Fecha fin de contrato");
@@ -592,7 +615,7 @@ String hora, minutos,segundos;
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13)
@@ -615,7 +638,7 @@ String hora, minutos,segundos;
                 .addGap(47, 47, 47)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -630,7 +653,7 @@ String hora, minutos,segundos;
                             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel11)
                                 .addComponent(jLabel18))
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(FechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -651,7 +674,7 @@ String hora, minutos,segundos;
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel17)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -662,7 +685,7 @@ String hora, minutos,segundos;
 
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        TablaContrato.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -670,10 +693,10 @@ String hora, minutos,segundos;
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Cuarto", "Inquilino", "Fecha de inicio", "Fecha fin"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(TablaContrato);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -946,10 +969,208 @@ String hora, minutos,segundos;
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Validar usuario y contraseña
+    public void CalcularFehca(String fechainicio, String fechafin){
+        try {
+            SimpleDateFormat fecha=new SimpleDateFormat("yyyy-MM-dd");
+            
+            Date fecha_inicio =fecha.parse(fechainicio);
+            Date fecha_fin =fecha.parse(fechafin);
+            long timepo_transcurrido=fecha_fin.getTime() - fecha_inicio.getTime();
+            TimeUnit unidad =TimeUnit.DAYS;
+             dias =unidad.convert(timepo_transcurrido,TimeUnit.MILLISECONDS);
+            System.out.println("Los dias faltantes son: "+dias+" Dias");
+           // return dias;
+        } catch (ParseException ex) {
+            java.util.logging.Logger.getLogger(Alquiler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+      
+      //  return -1;
+    }
+     public void CuatoOcupado(int a){
         
-        String usuario="juan";
+        switch (a) {
+            case 1:
+                btn1.setBackground(Color.red);
+                btn1.setText("Faltan \n"+dias);
+                break;
+                
+            case 2:btn2.setBackground(Color.red);
+            btn2.setText("Faltan \n"+dias);
+                break;
+                
+                case 3:
+                    btn3.setBackground(Color.red);
+                    btn3.setText("Faltan \n"+dias);
+                break;
+                
+                
+                case 4:
+                    btn4.setBackground(Color.red);
+                    btn4.setText("Faltan \n"+dias);
+                break;
+                
+                
+                case 5:
+                    btn5.setBackground(Color.red);
+                    btn5.setText("Faltan \n"+dias);
+                break;
+                
+                
+                case 6:
+                    btn6.setBackground(Color.red);
+                    btn6.setText("Faltan \n"+dias);
+                break;
+                
+                
+                
+                case 7:
+                    btn7.setBackground(Color.red);
+                    btn7.setText("Faltan \n"+dias);
+                break;
+                
+                
+                case 8:
+                    btn8.setBackground(Color.red);
+                    btn8.setText("Faltan \n"+dias);
+                break;
+                
+                
+                case 9:
+                    btn9.setBackground(Color.red);
+                    btn9.setText("Faltan \n"+dias);
+                break;
+                
+                
+                case 10:
+                    btn1.setBackground(Color.red);
+                    btn10.setText("Faltan \n"+dias);
+                break;
+                
+                
+            default:
+                throw new AssertionError();
+        }
+    }
+    
+    
+    
+    
+    public void CuatoVacio(int a){
+        
+        switch (a) {
+            case 1:
+                btn1.setBackground(Color.GREEN);
+                btn1.setText("Disponible");
+                break;
+                
+            case 2:btn2.setBackground(Color.GREEN);
+            btn2.setText("Disponible");
+                break;
+                
+                case 3:
+                    btn3.setBackground(Color.GREEN);
+                    btn3.setText("Disponible");
+                break;
+                
+                
+                case 4:
+                    btn4.setBackground(Color.GREEN);
+                    btn4.setText("Disponible");
+                break;
+                
+                
+                case 5:
+                    btn5.setBackground(Color.GREEN);
+                    btn5.setText("Disponible");
+                break;
+                
+                
+                case 6:
+                    btn6.setBackground(Color.GREEN);
+                    btn4.setText("Disponible");
+                break;
+                
+                
+                
+                case 7:
+                    btn7.setBackground(Color.GREEN);
+                    btn7.setText("Disponible");
+                break;
+                
+                
+                case 8:
+                    btn8.setBackground(Color.GREEN);
+                    btn8.setText("Disponible");
+                break;
+                
+                
+                case 9:
+                    btn9.setBackground(Color.GREEN);
+                    btn9.setText("Disponible");
+                break;
+                
+                
+                case 10:
+                    btn10.setBackground(Color.GREEN);
+                    btn10.setText("Disponible");
+                break;
+                
+                
+            default:
+                throw new AssertionError();
+        }
+    }
+    
+    
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      
+try{
+    consultarRenta();
+    
+    int indice=1;
+    System.out.println("Numero de fila "+TablaContrato.getRowCount());
+    System.out.println("Fecha fin "+String.valueOf(TablaContrato.getValueAt(0,2)));
+    System.out.println("Fecha fin "+String.valueOf(TablaContrato.getValueAt(0,3)));
+      
+    for(int i=0;i < TablaContrato.getRowCount();i++){
+             
+         for(int j=indice;j<=10;j++){
+            
+            if(String.valueOf(TablaContrato.getValueAt(i,0)).equals(""+j)){
+                
+                System.out.println("Estoy en if de los cuartos");
+            CalcularFehca(String.valueOf(TablaContrato.getValueAt(i,2)),String.valueOf(TablaContrato.getValueAt(i,3)));
+                
+            CuatoOcupado(j);
+            System.out.println("Valor de j "+j);
+                indice=j+1;
+                
+                if(i < TablaContrato.getRowCount()-1){
+                  break; 
+                }else{
+                     
+                }
+            }else{
+                CuatoVacio(j);
+                System.out.println("Valor de j "+j);
+            }
+            
+        }
+        
+    }
+    
+    
+        }catch(Exception ex){
+          //  Logger.getLogger(restarFehcas1.class.getName().log(Level.SERVER,null,ex));
+            System.out.println("Error "+ ex);
+            java.util.logging.Logger.getLogger(Alquiler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        
+// Validar usuario y contraseña
+        //Codigo para sacar la diferencia entre dos fechas
+                String usuario="juan";
         String contraseña="123";
         if(usuario.equals(usuario)&& contraseña.equals(contraseña)){
             
@@ -971,6 +1192,58 @@ String hora, minutos,segundos;
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /*Crear metodo para consultar las rententas actuales*/
+    
+     private void limpiaTabla(DefaultTableModel mod){
+         int a=mod.getRowCount();    
+          
+     while(a!=0){ // Ciclo para Borrar la Tabla 1
+         if(a!=0)
+               mod.removeRow(0);                      
+         a=mod.getRowCount(); 
+    }
+    }
+    
+    public void consultarRenta(){
+        limpiaTabla(modelo1);
+        Object[] ob = new Object[4];
+        try{
+         // Statement s=  m.conectaBase(bd).createStatement(); 
+           //Declaramos un objeto de tipo Resulset
+          String jdbcUrl = "jdbc:postgresql://localhost/" + bd;
+           String SQL="Select  idcuartos,nombre,fechainicio,fechafin from "+TablaRenta+ " WHERE fechafin >= ? ORDER BY idcuartos ASC";
+          // ResultSet rs= s.executeQuery("Select  idcuartos,nombre,fechainicio,fechafin from "+TablaRenta+" fechafin >= ?  ORDER BY id_modelo ASC;");
+     Connection con2 = DriverManager.getConnection(jdbcUrl, "postgres", "milo");
+     PreparedStatement statement = con2.prepareStatement(SQL);
+     LocalDate fechaActual = LocalDate.now();
+     statement.setObject(1, fechaActual);
+    // LocalDate fechaVencimiento = null;
+     
+            System.out.println("Estoy antes de entrar en resultset");
+     try (ResultSet resultSet = statement.executeQuery()) {
+            // Procesar el resultado
+            while (resultSet.next()) {
+                //fechaVencimiento = resultSet.getObject("fechainicio", LocalDate.class);
+              //  System.out.println("Fecha fin: " + fechaVencimiento);
+               ob[0] = resultSet.getObject("idcuartos");
+               ob[1] = resultSet.getObject("nombre");
+               ob[2] = resultSet.getObject("fechainicio");
+               ob[3] = resultSet.getObject("fechafin");
+               modelo1.addRow(ob);
+                System.out.println("YA ESTOY EN LA FUNCION RESULTSET");
+            }
+        }      
+          m.conectaBase(bd).close();
+         }catch(Exception e){
+           System.out.println(e.getMessage());
+       }
+          TablaContrato.setModel(modelo1);
+        
+        
+    }
+    
+    
+    
     
     //Metodo para habilitar los colores de los botnones(Habitaciones) Disponibles
     //Este metodo estará dentro del boton loguear.
@@ -1031,7 +1304,7 @@ String hora, minutos,segundos;
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        
+consultarRenta();        
         
         
          Contratos.setBounds(700, 550, 650, 600);
@@ -1062,12 +1335,36 @@ String hora, minutos,segundos;
   //  JButton aux = new JButton();
   //  aux.setText("holam");
  //   aux.setBackground("#9E9E9E");
+ //CalcularFehca();
 
-btn1.setBackground(Color.red);
+ 
+ //1 Esta ocupado
+ //diferente Esta libre
+ if(bandera==1){
+     btn1.setBackground(Color.red);
       Contratos.setBounds(700, 550, 650, 600);
         Contratos.setLocationRelativeTo(null);
         Contratos.setModal(true);
         Contratos.setVisible(true);
+     
+ }else{
+     
+     
+     btn1.setBackground(Color.red);
+      Contratos.setBounds(700, 550, 650, 600);
+        Contratos.setLocationRelativeTo(null);
+        Contratos.setModal(true);
+        Contratos.setVisible(true);
+ }
+ btn1.setBackground(Color.red);
+      Contratos.setBounds(700, 550, 650, 600);
+        Contratos.setLocationRelativeTo(null);
+        Contratos.setModal(true);
+        Contratos.setVisible(true);
+ 
+ 
+ 
+       
         
         
         
@@ -1082,6 +1379,24 @@ btn1.setBackground(Color.red);
         
         
     }//GEN-LAST:event_btn2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // Agregar Renta de cuartos
+        
+        SimpleDateFormat fechai=new SimpleDateFormat("yyyy-MM-dd");
+         SimpleDateFormat fechaf=new SimpleDateFormat("yyyy-MM-dd");
+        String data=fechai.format(FechaInicio.getDate());
+         String data1=fechaf.format(FechaFin.getDate());
+         System.out.println("Fecha inicio "+data+"\n fechafin "+data1);
+        m.insertaRenta(bd, TablaRenta,jTextField9.getText(),jTextField11.getText(),data,data1);
+
+
+//   this.modelo1.addRow(new Object[]{(data)});
+        
+        
+       
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
 public void horaActual(){
        Calendar ca =new GregorianCalendar();
        Date da = new Date();
@@ -1229,7 +1544,10 @@ public void horaActual(){
     private javax.swing.JDialog Arendador;
     private javax.swing.JDialog Contratos;
     private javax.swing.JDialog DatosPers;
+    private com.toedter.calendar.JDateChooser FechaFin;
+    private com.toedter.calendar.JDateChooser FechaInicio;
     private javax.swing.JDialog Habitaciones;
+    private javax.swing.JTable TablaContrato;
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btn2;
@@ -1253,8 +1571,6 @@ public void horaActual(){
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1303,7 +1619,6 @@ public void horaActual(){
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
