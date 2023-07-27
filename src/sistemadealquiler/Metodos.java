@@ -1,5 +1,5 @@
-
 package sistemadealquiler;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,14 +14,15 @@ import javax.swing.JOptionPane;
  * @author emili
  */
 public class Metodos {
-     String pass = "milo";
+
+    String pass = "milo";
     String user = "postgres";
     String host = "localhost";
     Connection con1 = null;
-     String nom;
-    
+    String nom;
+
     //Linea de prueba
-     public Connection conectaServer() {
+    public Connection conectaServer() {
         Connection con = null;
         try {
             Class.forName("org.postgresql.Driver");
@@ -46,12 +47,8 @@ public class Metodos {
         }
         return con;
     }
-    
-    
-    
-    
-    
-     public int contraseña(String contraseña, String bd) {//Validar contraseña 
+
+    public int contraseña(String contraseña, String bd) {//Validar contraseña 
 
         int a = 0;
 
@@ -114,12 +111,11 @@ public class Metodos {
         return nom;
     }
 
-    
-      public void insertaRenta(String bd, String table, String idcuartos, String Nombre, String FechaInicio, String FechaFin) {
+    public void insertaRenta(String bd, String table, String idcuartos, String Nombre, String FechaInicio, String FechaFin) {
 
         try {
             Statement s = conectaBase(bd).createStatement();
-           
+
             PreparedStatement ps = conectaBase(bd).prepareStatement("INSERT INTO " + table + "(idcuartos,Nombre,FechaInicio,FechaFin)values (?,?,?,?)");
             ps.setInt(1, Integer.parseInt(idcuartos));
             ps.setString(2, Nombre);
@@ -134,15 +130,12 @@ public class Metodos {
         }
 
     }
-      
-      
-      
-      public void fechaInicio(String bd){
-         //  String SQL = "select * from USUARIOS where contrasena ='" + contraseña + "' ";
-          //Select idcuartos,fechainicio, fechafin from Renta;
-            String SQL = "select fechainicio from Renta";
-            
-             try {
+
+    public void fechaInicio(String bd) {
+        
+        String SQL = "select fechainicio from Renta";
+
+        try {
 
             Statement s = conectaBase(bd).createStatement();
             ResultSet rs = s.executeQuery(SQL);
@@ -151,90 +144,52 @@ public class Metodos {
                 nom = rs.getString(1);
 
             }
-System.out.println("Fecha inicio"+nom);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error usuario" + e);
-        }
-            
-            
-            
-      }
-      
-      
-      /*
-      public void fechaFin(String bd, LocalDate Fecha) throws SQLException{
-         Connection con2 = DriverManager.getConnection("jdbc:postgresql://localhost" + host + "/", user, pass);
-           String SQL = "select fechafin from Renta where fechafin >=? ";
-           
-            try {
-                 PreparedStatement statement = conectaBase(bd).prepareStatement(SQL); 
-
-           // Statement s = conectaBase(bd).createStatement();
-           
-           // ResultSet rs = s.executeQuery(SQL);
-             statement.setObject(1, Fecha);
-            /*if (rs.next()) {
-
-                nom = rs.getString(1);
-
-            }//
-            
-            
-            
-            LocalDate fechaVencimiento = null;
-              try (ResultSet resultSet = statement.executeQuery()) {
-                    // Procesar el resultado
-                    while (resultSet.next()) {
-                  //      int idTarea = resultSet.getInt("id");
-                    //    String nombreTarea = resultSet.getString("nombre");
-                         fechaVencimiento = resultSet.getObject("fechafin", LocalDate.class);
-                      //  System.out.println("Tarea ID: " + idTarea + ", Nombre: " + nombreTarea + ", Fecha de vencimiento: " + fechaVencimiento);
-                    }
-                }
-            
-            
-                System.out.println("Fecha fin"+fechaVencimiento);
-
+            System.out.println("Fecha inicio" + nom);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error usuario" + e);
         }
 
-
-
-
-
-
-
-
-
-
-      }
-    */
-      
-      
-      public void fechaFin(String bd, LocalDate Fecha) throws SQLException {
-    String jdbcUrl = "jdbc:postgresql://localhost/" + bd; // Usa el nombre de la base de datos en el jdbcUrl
- //   String user = "tu_usuario"; // Reemplaza con el nombre de usuario de la base de datos
-   // String pass = "tu_contraseña"; // Reemplaza con la contraseña de la base de datos
-
-    String SQL = "SELECT fechainicio FROM Renta WHERE fechainicio >= ?";
-
-    try (Connection con2 = DriverManager.getConnection(jdbcUrl, user, pass);
-         PreparedStatement statement = con2.prepareStatement(SQL)) {
-
-        statement.setObject(1, Fecha);
-
-        LocalDate fechaVencimiento = null;
-        try (ResultSet resultSet = statement.executeQuery()) {
-            // Procesar el resultado
-            while (resultSet.next()) {
-                fechaVencimiento = resultSet.getObject("fechainicio", LocalDate.class);
-                System.out.println("Fecha fin: " + fechaVencimiento);
-            }
-        }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error: " + e);
     }
-}
+
     
+    public void fechaFin(String bd, LocalDate Fecha) throws SQLException {
+        String jdbcUrl = "jdbc:postgresql://localhost/" + bd; // Usa el nombre de la base de datos en el jdbcUrl
+        //   String user = "tu_usuario"; // Reemplaza con el nombre de usuario de la base de datos
+        // String pass = "tu_contraseña"; // Reemplaza con la contraseña de la base de datos
+
+        String SQL = "SELECT fechainicio FROM Renta WHERE fechainicio >= ?";
+
+        try (Connection con2 = DriverManager.getConnection(jdbcUrl, user, pass);
+                PreparedStatement statement = con2.prepareStatement(SQL)) {
+
+            statement.setObject(1, Fecha);
+
+            LocalDate fechaVencimiento = null;
+            try (ResultSet resultSet = statement.executeQuery()) {
+                // Procesar el resultado
+                while (resultSet.next()) {
+                    fechaVencimiento = resultSet.getObject("fechainicio", LocalDate.class);
+                    System.out.println("Fecha fin: " + fechaVencimiento);
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e);
+        }
+    }
+
+    public void eliminarCliente(String bd, String nombreTabla, int a) {
+
+        try {
+            Statement s = conectaBase(bd).createStatement();
+            String eliminar = "DELETE FROM " + nombreTabla + " WHERE idcuartos= " + a + ";";
+            s.executeUpdate(eliminar);
+            JOptionPane.showMessageDialog(null, "Se elimino cliente exitosamente");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+
+        }
+
+    }
+
 }
