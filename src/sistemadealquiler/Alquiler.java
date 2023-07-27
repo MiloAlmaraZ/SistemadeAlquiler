@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package sistemadealquiler;
+
 import java.util.Date;
 import java.awt.Color;
 import java.lang.System.Logger;
@@ -35,28 +36,30 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author emili
  */
-public class Alquiler extends javax.swing.JFrame implements Runnable{
+public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     /**
      * Creates new form Alquiler
      */
-    DefaultTableModel modelo1= new DefaultTableModel();
+    DefaultTableModel modelo1 = new DefaultTableModel();
+
     public Alquiler() {
         initComponents();
-        Thread hilo1 =new Thread(this);
+        Thread hilo1 = new Thread(this);
         hilo1.start();
-        modelo1=(DefaultTableModel)TablaContrato.getModel();
+        modelo1 = (DefaultTableModel) TablaContrato.getModel();
     }
-    
-    Metodos m=new Metodos();
-    static int cont=0; static boolean ban=true;
-     static String a="DEPARTAMENTOS LOGUEN                                            DEPARTAMENTOS LOGUEN                 ";
-    static String a2="                                                                                                       ";
-String hora, minutos,segundos;
-String bd="Renta1";
-String TablaRenta="Renta";
-int bandera;
-long dias;
+
+    Metodos m = new Metodos();
+    static int cont = 0;
+    static boolean ban = true;
+    static String a = "DEPARTAMENTOS LOGUEN                                            DEPARTAMENTOS LOGUEN                 ";
+    static String a2 = "                                                                                                       ";
+    String hora, minutos, segundos;
+    String bd = "Renta1";
+    String TablaRenta = "Renta";
+    int bandera;
+    long dias;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -183,20 +186,60 @@ long dias;
         });
 
         btn3.setText("jButton14");
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
 
         btn4.setText("jButton15");
+        btn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn4ActionPerformed(evt);
+            }
+        });
 
         btn5.setText("jButton16");
+        btn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn5ActionPerformed(evt);
+            }
+        });
 
         btn6.setText("jButton12");
+        btn6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn6ActionPerformed(evt);
+            }
+        });
 
         btn7.setText("jButton12");
+        btn7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn7ActionPerformed(evt);
+            }
+        });
 
         btn8.setText("jButton12");
+        btn8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn8ActionPerformed(evt);
+            }
+        });
 
         btn9.setText("jButton12");
+        btn9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn9ActionPerformed(evt);
+            }
+        });
 
         btn10.setText("jButton12");
+        btn10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -969,453 +1012,522 @@ long dias;
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    public void CalcularFehca(String fechainicio, String fechafin){
+    public void CalcularFehca(String fechafin) {
         try {
-            SimpleDateFormat fecha=new SimpleDateFormat("yyyy-MM-dd");
-            
-            Date fecha_inicio =fecha.parse(fechainicio);
-            Date fecha_fin =fecha.parse(fechafin);
-            long timepo_transcurrido=fecha_fin.getTime() - fecha_inicio.getTime();
-            TimeUnit unidad =TimeUnit.DAYS;
-             dias =unidad.convert(timepo_transcurrido,TimeUnit.MILLISECONDS);
-            System.out.println("Los dias faltantes son: "+dias+" Dias");
-           // return dias;
+            SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
+            LocalDate FechaActual = LocalDate.now();
+            Date fecha_inicio = fecha.parse("" + FechaActual);
+            Date fecha_fin = fecha.parse(fechafin);
+            long timepo_transcurrido = fecha_fin.getTime() - fecha_inicio.getTime();
+            TimeUnit unidad = TimeUnit.DAYS;
+            dias = unidad.convert(timepo_transcurrido, TimeUnit.MILLISECONDS);
+         
         } catch (ParseException ex) {
             java.util.logging.Logger.getLogger(Alquiler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-      
-      //  return -1;
+
     }
-     public void CuatoOcupado(int a){
-        
+
+    public void CuatoOcupado(int a) {
+
         switch (a) {
             case 1:
                 btn1.setBackground(Color.red);
-                btn1.setText("Faltan \n"+dias);
+                btn1.setText("Faltan \n" + dias);
                 break;
-                
-            case 2:btn2.setBackground(Color.red);
-            btn2.setText("Faltan \n"+dias);
+
+            case 2:
+                btn2.setBackground(Color.red);
+                btn2.setText("Faltan \n" + dias);
                 break;
-                
-                case 3:
-                    btn3.setBackground(Color.red);
-                    btn3.setText("Faltan \n"+dias);
+
+            case 3:
+                btn3.setBackground(Color.red);
+                btn3.setText("Faltan \n" + dias);
                 break;
-                
-                
-                case 4:
-                    btn4.setBackground(Color.red);
-                    btn4.setText("Faltan \n"+dias);
+
+            case 4:
+                btn4.setBackground(Color.red);
+                btn4.setText("Faltan \n" + dias);
                 break;
-                
-                
-                case 5:
-                    btn5.setBackground(Color.red);
-                    btn5.setText("Faltan \n"+dias);
+
+            case 5:
+                btn5.setBackground(Color.red);
+                btn5.setText("Faltan \n" + dias);
                 break;
-                
-                
-                case 6:
-                    btn6.setBackground(Color.red);
-                    btn6.setText("Faltan \n"+dias);
+
+            case 6:
+                btn6.setBackground(Color.red);
+                btn6.setText("Faltan \n" + dias);
                 break;
-                
-                
-                
-                case 7:
-                    btn7.setBackground(Color.red);
-                    btn7.setText("Faltan \n"+dias);
+
+            case 7:
+                btn7.setBackground(Color.red);
+                btn7.setText("Faltan \n" + dias);
                 break;
-                
-                
-                case 8:
-                    btn8.setBackground(Color.red);
-                    btn8.setText("Faltan \n"+dias);
+
+            case 8:
+                btn8.setBackground(Color.red);
+                btn8.setText("Faltan \n" + dias);
                 break;
-                
-                
-                case 9:
-                    btn9.setBackground(Color.red);
-                    btn9.setText("Faltan \n"+dias);
+
+            case 9:
+                btn9.setBackground(Color.red);
+                btn9.setText("Faltan \n" + dias);
                 break;
-                
-                
-                case 10:
-                    btn1.setBackground(Color.red);
-                    btn10.setText("Faltan \n"+dias);
+
+            case 10:
+                btn10.setBackground(Color.red);
+                btn10.setText("Faltan \n" + dias);
                 break;
-                
-                
+
             default:
                 throw new AssertionError();
         }
     }
-    
-    
-    
-    
-    public void CuatoVacio(int a){
-        
+
+    public void CuatoVacio(int a) {
+
         switch (a) {
             case 1:
                 btn1.setBackground(Color.GREEN);
                 btn1.setText("Disponible");
                 break;
-                
-            case 2:btn2.setBackground(Color.GREEN);
-            btn2.setText("Disponible");
+
+            case 2:
+                btn2.setBackground(Color.GREEN);
+                btn2.setText("Disponible");
                 break;
-                
-                case 3:
-                    btn3.setBackground(Color.GREEN);
-                    btn3.setText("Disponible");
+
+            case 3:
+                btn3.setBackground(Color.GREEN);
+                btn3.setText("Disponible");
                 break;
-                
-                
-                case 4:
-                    btn4.setBackground(Color.GREEN);
-                    btn4.setText("Disponible");
+
+            case 4:
+                btn4.setBackground(Color.GREEN);
+                btn4.setText("Disponible");
                 break;
-                
-                
-                case 5:
-                    btn5.setBackground(Color.GREEN);
-                    btn5.setText("Disponible");
+
+            case 5:
+                btn5.setBackground(Color.GREEN);
+                btn5.setText("Disponible");
                 break;
-                
-                
-                case 6:
-                    btn6.setBackground(Color.GREEN);
-                    btn4.setText("Disponible");
+
+            case 6:
+                btn6.setBackground(Color.GREEN);
+                btn6.setText("Disponible");
                 break;
-                
-                
-                
-                case 7:
-                    btn7.setBackground(Color.GREEN);
-                    btn7.setText("Disponible");
+
+            case 7:
+                btn7.setBackground(Color.GREEN);
+                btn7.setText("Disponible");
                 break;
-                
-                
-                case 8:
-                    btn8.setBackground(Color.GREEN);
-                    btn8.setText("Disponible");
+
+            case 8:
+                btn8.setBackground(Color.GREEN);
+                btn8.setText("Disponible");
                 break;
-                
-                
-                case 9:
-                    btn9.setBackground(Color.GREEN);
-                    btn9.setText("Disponible");
+
+            case 9:
+                btn9.setBackground(Color.GREEN);
+                btn9.setText("Disponible");
                 break;
-                
-                
-                case 10:
-                    btn10.setBackground(Color.GREEN);
-                    btn10.setText("Disponible");
+
+            case 10:
+                btn10.setBackground(Color.GREEN);
+                btn10.setText("Disponible");
                 break;
-                
-                
+
             default:
                 throw new AssertionError();
         }
     }
-    
-    
-    
+
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      
-try{
-    consultarRenta();
-    
-    int indice=1;
-    System.out.println("Numero de fila "+TablaContrato.getRowCount());
-    System.out.println("Fecha fin "+String.valueOf(TablaContrato.getValueAt(0,2)));
-    System.out.println("Fecha fin "+String.valueOf(TablaContrato.getValueAt(0,3)));
-      
-    for(int i=0;i < TablaContrato.getRowCount();i++){
-             
-         for(int j=indice;j<=10;j++){
-            
-            if(String.valueOf(TablaContrato.getValueAt(i,0)).equals(""+j)){
-                
-                System.out.println("Estoy en if de los cuartos");
-            CalcularFehca(String.valueOf(TablaContrato.getValueAt(i,2)),String.valueOf(TablaContrato.getValueAt(i,3)));
-                
-            CuatoOcupado(j);
-            System.out.println("Valor de j "+j);
-                indice=j+1;
-                
-                if(i < TablaContrato.getRowCount()-1){
-                  break; 
-                }else{
-                     
+
+        try {
+            consultarRenta();
+
+            int indice = 1;
+            System.out.println("Numero de fila " + TablaContrato.getRowCount());
+            System.out.println("Fecha fin " + String.valueOf(TablaContrato.getValueAt(0, 2)));
+            System.out.println("Fecha fin " + String.valueOf(TablaContrato.getValueAt(0, 3)));
+
+            for (int i = 0; i < TablaContrato.getRowCount(); i++) {
+
+                for (int j = indice; j <= 10; j++) {
+
+                    if (String.valueOf(TablaContrato.getValueAt(i, 0)).equals("" + j)) {
+
+                        //  System.out.println("Estoy en if de los cuartos");
+                        CalcularFehca(String.valueOf(String.valueOf(TablaContrato.getValueAt(i, 3))));
+
+                        CuatoOcupado(j);
+                        System.out.println("Valor de j en if  ROJO " + j);
+                        indice = j + 1;
+
+                        if (i < TablaContrato.getRowCount() - 1) {
+                            break;
+                        } else {
+                              
+                        }
+                    } else {
+                        CuatoVacio(j);
+                        System.out.println("Valor de j en else VERDE" + j);
+                    }
+
                 }
-            }else{
-                CuatoVacio(j);
-                System.out.println("Valor de j "+j);
+
             }
-            
-        }
-        
-    }
-    
-    
-        }catch(Exception ex){
-          //  Logger.getLogger(restarFehcas1.class.getName().log(Level.SERVER,null,ex));
-            System.out.println("Error "+ ex);
+
+        } catch (Exception ex) {
+            System.out.println("Error " + ex);
             java.util.logging.Logger.getLogger(Alquiler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        
 // Validar usuario y contraseña
         //Codigo para sacar la diferencia entre dos fechas
-                String usuario="juan";
-        String contraseña="123";
-        if(usuario.equals(usuario)&& contraseña.equals(contraseña)){
-            
+        String usuario = "juan";
+        String contraseña = "123";
+        if (usuario.equals(usuario) && contraseña.equals(contraseña)) {
+
             Habitaciones();
-        JOptionPane.showMessageDialog(null,"Bienvenido");
-           Alquilerdepartamento.setBounds(700, 550, 550, 480);
-        Alquilerdepartamento.setLocationRelativeTo(null);
-        Alquilerdepartamento.setModal(true);
-        Alquilerdepartamento.setVisible(true);
-        
-        
-        
-        }
-        
-        else{
-        JOptionPane.showMessageDialog(null,"usuario o contraseña incorrecta");
+            JOptionPane.showMessageDialog(null, "Bienvenido");
+            Alquilerdepartamento.setBounds(700, 550, 550, 480);
+            Alquilerdepartamento.setLocationRelativeTo(null);
+            Alquilerdepartamento.setModal(true);
+            Alquilerdepartamento.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "usuario o contraseña incorrecta");
 
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /*Crear metodo para consultar las rententas actuales*/
-    
-     private void limpiaTabla(DefaultTableModel mod){
-         int a=mod.getRowCount();    
-          
-     while(a!=0){ // Ciclo para Borrar la Tabla 1
-         if(a!=0)
-               mod.removeRow(0);                      
-         a=mod.getRowCount(); 
+    private void limpiaTabla(DefaultTableModel mod) {
+        int a = mod.getRowCount();
+
+        while (a != 0) { // Ciclo para Borrar la Tabla 1
+            if (a != 0) {
+                mod.removeRow(0);
+            }
+            a = mod.getRowCount();
+        }
     }
-    }
-    
-    public void consultarRenta(){
+
+    public void consultarRenta() {
         limpiaTabla(modelo1);
         Object[] ob = new Object[4];
-        try{
-         // Statement s=  m.conectaBase(bd).createStatement(); 
-           //Declaramos un objeto de tipo Resulset
-          String jdbcUrl = "jdbc:postgresql://localhost/" + bd;
-           String SQL="Select  idcuartos,nombre,fechainicio,fechafin from "+TablaRenta+ " WHERE fechafin >= ? ORDER BY idcuartos ASC";
-          // ResultSet rs= s.executeQuery("Select  idcuartos,nombre,fechainicio,fechafin from "+TablaRenta+" fechafin >= ?  ORDER BY id_modelo ASC;");
-     Connection con2 = DriverManager.getConnection(jdbcUrl, "postgres", "milo");
-     PreparedStatement statement = con2.prepareStatement(SQL);
-     LocalDate fechaActual = LocalDate.now();
-     statement.setObject(1, fechaActual);
-    // LocalDate fechaVencimiento = null;
-     
+        try {
+
+            String jdbcUrl = "jdbc:postgresql://localhost/" + bd;
+            String SQL = "Select  idcuartos,nombre,fechainicio,fechafin from " + TablaRenta + " WHERE fechafin >= ? ORDER BY idcuartos ASC";
+            Connection con2 = DriverManager.getConnection(jdbcUrl, "postgres", "milo");
+            PreparedStatement statement = con2.prepareStatement(SQL);
+            LocalDate fechaActual = LocalDate.now();
+            statement.setObject(1, fechaActual);
+
             System.out.println("Estoy antes de entrar en resultset");
-     try (ResultSet resultSet = statement.executeQuery()) {
-            // Procesar el resultado
-            while (resultSet.next()) {
-                //fechaVencimiento = resultSet.getObject("fechainicio", LocalDate.class);
-              //  System.out.println("Fecha fin: " + fechaVencimiento);
-               ob[0] = resultSet.getObject("idcuartos");
-               ob[1] = resultSet.getObject("nombre");
-               ob[2] = resultSet.getObject("fechainicio");
-               ob[3] = resultSet.getObject("fechafin");
-               modelo1.addRow(ob);
-                System.out.println("YA ESTOY EN LA FUNCION RESULTSET");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+
+                    ob[0] = resultSet.getObject("idcuartos");
+                    ob[1] = resultSet.getObject("nombre");
+                    ob[2] = resultSet.getObject("fechainicio");
+                    ob[3] = resultSet.getObject("fechafin");
+                    modelo1.addRow(ob);
+                    System.out.println("YA ESTOY EN LA FUNCION RESULTSET");
+                }
             }
-        }      
-          m.conectaBase(bd).close();
-         }catch(Exception e){
-           System.out.println(e.getMessage());
-       }
-          TablaContrato.setModel(modelo1);
-        
-        
+            m.conectaBase(bd).close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        TablaContrato.setModel(modelo1);
+
     }
-    
-    
-    
-    
+
     //Metodo para habilitar los colores de los botnones(Habitaciones) Disponibles
     //Este metodo estará dentro del boton loguear.
-    
-    public void Habitaciones(){
-        
+    public void Habitaciones() {
+
         //Primero consultar la base de datos para saber cuantas habitaciones estan disponibles 
-        int NumHabitaciones =10;
-        int FehcaInicio=0;
-        int FechaFin=0;
-        int fecha=0;
-        for(int i=0;i<NumHabitaciones;i++){
+        int NumHabitaciones = 10;
+        int FehcaInicio = 0;
+        int FechaFin = 0;
+        int fecha = 0;
+        for (int i = 0; i < NumHabitaciones; i++) {
             //Verifacamos que habitaciones estan disponibles. Fecha inicoo y fecha fin Diferencia =0
-            
-            if(i%2==10){
+
+            if (i % 2 == 10) {
+
                 //Color verde a las habitaciones disponibles
-            btn2.setBackground(Color.red);
+                /* btn2.setBackground(Color.red);
             
             btn4.setBackground(Color.red);
             btn6.setBackground(Color.red);
-            btn8.setBackground(Color.red);
-                
-            }else{
+            btn8.setBackground(Color.red);*/
+            } else {
                 //COlor rojo a las habitaciones ocupadas
                 //Agregar el nombre del inquilino que ocupa esa habitacion
-                
-                
-                btn1.setBackground(Color.red);
+
+                /* btn1.setBackground(Color.red);
             
             btn3.setBackground(Color.red);
             btn5.setBackground(Color.red);
-            btn7.setBackground(Color.red);
+            btn7.setBackground(Color.red);*/
             }
-            
+
         }
-            
+
     }
-    
-    
-    
-    
-    
+
+
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-       //         JOptionPane.showMessageDialog(null,"Hola milo");
+        //         JOptionPane.showMessageDialog(null,"Hola milo");
 
         Arendador.setBounds(700, 550, 750, 650);
         Arendador.setLocationRelativeTo(null);
         Arendador.setModal(true);
         Arendador.setVisible(true);
-                
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-consultarRenta();        
-        
-        
-         Contratos.setBounds(700, 550, 650, 600);
+        consultarRenta();
+
+        Contratos.setBounds(700, 550, 650, 600);
         Contratos.setLocationRelativeTo(null);
         Contratos.setModal(true);
         Contratos.setVisible(true);
-        
+
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMenuItem3AncestorAdded
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jMenuItem3AncestorAdded
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        
+
         Habitaciones.setBounds(700, 550, 700, 600);
         Habitaciones.setLocationRelativeTo(null);
         Habitaciones.setModal(true);
         Habitaciones.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         // Boton 1 Contrato 
-  //  JButton aux = new JButton();
-  //  aux.setText("holam");
- //   aux.setBackground("#9E9E9E");
- //CalcularFehca();
+        //  JButton aux = new JButton();
+        //  aux.setText("holam");
+        //   aux.setBackground("#9E9E9E");
+        //CalcularFehca();
 
- 
- //1 Esta ocupado
- //diferente Esta libre
- if(bandera==1){
-     btn1.setBackground(Color.red);
-      Contratos.setBounds(700, 550, 650, 600);
-        Contratos.setLocationRelativeTo(null);
-        Contratos.setModal(true);
-        Contratos.setVisible(true);
-     
- }else{
-     
-     
-     btn1.setBackground(Color.red);
-      Contratos.setBounds(700, 550, 650, 600);
-        Contratos.setLocationRelativeTo(null);
-        Contratos.setModal(true);
-        Contratos.setVisible(true);
- }
- btn1.setBackground(Color.red);
-      Contratos.setBounds(700, 550, 650, 600);
-        Contratos.setLocationRelativeTo(null);
-        Contratos.setModal(true);
-        Contratos.setVisible(true);
- 
- 
- 
-       
-        
-        
-        
+        //1 Esta ocupado
+        //diferente Esta libre
+        if (btn2.getText().equals("Dispibible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         // Boton 2 i nformacion
-        DatosPers.setBounds(700, 550, 650, 600);
-        DatosPers.setLocationRelativeTo(null);
-        DatosPers.setModal(true);
-        DatosPers.setVisible(true);
-        
-        
+
+        if (btn1.getText().equals("Disponible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // Agregar Renta de cuartos
-        
-        SimpleDateFormat fechai=new SimpleDateFormat("yyyy-MM-dd");
-         SimpleDateFormat fechaf=new SimpleDateFormat("yyyy-MM-dd");
-        String data=fechai.format(FechaInicio.getDate());
-         String data1=fechaf.format(FechaFin.getDate());
-         System.out.println("Fecha inicio "+data+"\n fechafin "+data1);
-        m.insertaRenta(bd, TablaRenta,jTextField9.getText(),jTextField11.getText(),data,data1);
 
+        SimpleDateFormat fechai = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat fechaf = new SimpleDateFormat("yyyy-MM-dd");
+        String data = fechai.format(FechaInicio.getDate());
+        String data1 = fechaf.format(FechaFin.getDate());
+        System.out.println("Fecha inicio " + data + "\n fechafin " + data1);
+        m.insertaRenta(bd, TablaRenta, jTextField9.getText(), jTextField11.getText(), data, data1);
 
 //   this.modelo1.addRow(new Object[]{(data)});
-        
-        
-       
-        
-    }//GEN-LAST:event_jButton6ActionPerformed
-public void horaActual(){
-       Calendar ca =new GregorianCalendar();
-       Date da = new Date();
-       ca.setTime(da);
 
-       hora=ca.get(Calendar.HOUR_OF_DAY)>9?""+ca.get(Calendar.HOUR_OF_DAY):"0"+ca.get(Calendar.HOUR_OF_DAY);
-       minutos=ca.get(Calendar.MINUTE)>9?""+ca.get(Calendar.MINUTE):"0"+ca.get(Calendar.MINUTE);
-       segundos=ca.get(Calendar.SECOND)>9?""+ca.get(Calendar.SECOND):"0"+ca.get(Calendar.SECOND);   
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        // TODO add your handling code here:
+        if (btn3.getText().equals("Disponible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+    }//GEN-LAST:event_btn3ActionPerformed
+
+    private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
+        // TODO add your handling code here:
+        if (btn4.getText().equals("Disponible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+    }//GEN-LAST:event_btn4ActionPerformed
+
+    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
+        // TODO add your handling code here:
+        if (btn5.getText().equals("Disponible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+    }//GEN-LAST:event_btn5ActionPerformed
+
+    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
+        // TODO add your handling code here:
+        if (btn6.getText().equals("Disponible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+    }//GEN-LAST:event_btn6ActionPerformed
+
+    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
+        // TODO add your handling code here:
+        if (btn7.getText().equals("Disponible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+    }//GEN-LAST:event_btn7ActionPerformed
+
+    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
+        // TODO add your handling code here:
+        if (btn8.getText().equals("Disponible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+    }//GEN-LAST:event_btn8ActionPerformed
+
+    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
+        // TODO add your handling code here:
+        if (btn9.getText().equals("Disponible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+    }//GEN-LAST:event_btn9ActionPerformed
+
+    private void btn10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10ActionPerformed
+        // TODO add your handling code here:
+        if (btn10.getText().equals("Disponible")) {
+            Contratos.setBounds(700, 550, 650, 600);
+            Contratos.setLocationRelativeTo(null);
+            Contratos.setModal(true);
+            Contratos.setVisible(true);
+        } else {
+            DatosPers.setBounds(700, 550, 650, 600);
+            DatosPers.setLocationRelativeTo(null);
+            DatosPers.setModal(true);
+            DatosPers.setVisible(true);
+        }
+
+    }//GEN-LAST:event_btn10ActionPerformed
+    public void horaActual() {
+        Calendar ca = new GregorianCalendar();
+        Date da = new Date();
+        ca.setTime(da);
+
+        hora = ca.get(Calendar.HOUR_OF_DAY) > 9 ? "" + ca.get(Calendar.HOUR_OF_DAY) : "0" + ca.get(Calendar.HOUR_OF_DAY);
+        minutos = ca.get(Calendar.MINUTE) > 9 ? "" + ca.get(Calendar.MINUTE) : "0" + ca.get(Calendar.MINUTE);
+        segundos = ca.get(Calendar.SECOND) > 9 ? "" + ca.get(Calendar.SECOND) : "0" + ca.get(Calendar.SECOND);
     }
-    
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-       
-        
-        
-        
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1445,99 +1557,78 @@ public void horaActual(){
                 new Alquiler().setVisible(true);
             }
         });
-        
-        
-        
-        
-        
-        RelojModeloUtil modelo = new RelojModeloUtil();
-         modelo.addObserver (new Observer()
-         {
-             public void update (Observable unObservable, Object dato)
-             {
-                 
-                 
-                 
-                    try{
-                        
-                                        
-                        if (ban){
-                            letrero.setText(a2.substring(0, a2.length()-cont)+ a.substring(0, cont));
-                            cont++;
-                         }
-                        else{
-                            letrero.setText(a.substring(cont, a.length()) + a2.substring(0, cont) );
-                            cont++;
-                        }
-                                       
-                        if (cont==a.length()){
-                            if (cont==a.length() && ban== false){
-                                cont=0;
-                                ban=true;
-                            }else{
-                                cont=0;
-                                ban=false;
-                            }
-                        }
-                   }catch(Exception e){}  
-             }
-         });
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-    
-    
-     public void run() {
-         for (int i = 0; i < 10; i++) {
-            
-        i=i%4;
-        try{
-            sleep(10);
-        }catch(Exception ex){
-            System.out.println("Error"+ex.getMessage());
-        }
-        horaActual();
-       // relog.setText(hora+":"+minutos+":"+segundos);
-        hora2.setText(hora+":"+minutos+":"+segundos);
-    }
-    }
-    
-      public static class RelojModeloUtil extends Observable
- {
-     /**
-      * Lanza un timer cada segundo.
-      */
-     public RelojModeloUtil()
-     {
-         Timer timer = new Timer();
-         timer.scheduleAtFixedRate(timerTask, 0, 100);
-         
-     }
 
-      /**
-      * Clase que se mete en Timer, para que se le avise cada segundo.
-      */
-     TimerTask timerTask = new TimerTask()
-     {
-         /**
-          * Método al que Timer llamará cada segundo. Se encarga de avisar
-          * a los observadores de este modelo.
-          */
-         public void run() 
-         {
-             setChanged();
-             notifyObservers(new Date());
-             
-         }
-     };
-}
+        RelojModeloUtil modelo = new RelojModeloUtil();
+        modelo.addObserver(new Observer() {
+            public void update(Observable unObservable, Object dato) {
+
+                try {
+
+                    if (ban) {
+                        letrero.setText(a2.substring(0, a2.length() - cont) + a.substring(0, cont));
+                        cont++;
+                    } else {
+                        letrero.setText(a.substring(cont, a.length()) + a2.substring(0, cont));
+                        cont++;
+                    }
+
+                    if (cont == a.length()) {
+                        if (cont == a.length() && ban == false) {
+                            cont = 0;
+                            ban = true;
+                        } else {
+                            cont = 0;
+                            ban = false;
+                        }
+                    }
+                } catch (Exception e) {
+                }
+            }
+        });
+
+    }
+
+    public void run() {
+        for (int i = 0; i < 10; i++) {
+
+            i = i % 4;
+            try {
+                sleep(10);
+            } catch (Exception ex) {
+                System.out.println("Error" + ex.getMessage());
+            }
+            horaActual();
+            // relog.setText(hora+":"+minutos+":"+segundos);
+            hora2.setText(hora + ":" + minutos + ":" + segundos);
+        }
+    }
+
+    public static class RelojModeloUtil extends Observable {
+
+        /**
+         * Lanza un timer cada segundo.
+         */
+        public RelojModeloUtil() {
+            Timer timer = new Timer();
+            timer.scheduleAtFixedRate(timerTask, 0, 100);
+
+        }
+
+        /**
+         * Clase que se mete en Timer, para que se le avise cada segundo.
+         */
+        TimerTask timerTask = new TimerTask() {
+            /**
+             * Método al que Timer llamará cada segundo. Se encarga de avisar a
+             * los observadores de este modelo.
+             */
+            public void run() {
+                setChanged();
+                notifyObservers(new Date());
+
+            }
+        };
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog Alquilerdepartamento;
