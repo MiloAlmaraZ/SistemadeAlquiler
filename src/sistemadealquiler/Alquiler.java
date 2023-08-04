@@ -42,6 +42,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
      * Creates new form Alquiler
      */
     DefaultTableModel modelo1 = new DefaultTableModel();
+    DefaultTableModel modelo2 = new DefaultTableModel();
+
     public Alquiler() {
         initComponents();
         Thread hilo1 = new Thread(this);
@@ -49,6 +51,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         this.setLocationRelativeTo(null);
         FechaInicio.setMinSelectableDate(new Date());
         modelo1 = (DefaultTableModel) TablaContrato.getModel();
+        modelo2 = (DefaultTableModel) TblGastos.getModel();
     }
 
     Metodos m = new Metodos();
@@ -61,6 +64,11 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     String TablaRenta = "Renta";
     int bandera;
     long dias;
+    String TablaGastos = "gasto";
+    String host = "localhost";
+    String BD = "renta";
+    String user = "postgres";
+    String passErik = "rajkire16";
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,8 +124,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        Arendador = new javax.swing.JDialog();
+        mbContabilidad = new javax.swing.JMenu();
+        miPagos = new javax.swing.JMenuItem();
+        miGastos = new javax.swing.JMenuItem();
+        Arrendador = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
@@ -179,11 +189,25 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         jTextField17 = new javax.swing.JTextField();
         jTextField18 = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
-        jDialog1 = new javax.swing.JDialog();
         Opciones = new javax.swing.JDialog();
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
+        Gastos = new javax.swing.JDialog();
+        pnlGastos = new javax.swing.JPanel();
+        lblDescripcionGastos = new javax.swing.JLabel();
+        lblMontoGastos = new javax.swing.JLabel();
+        lblFechaGastos = new javax.swing.JLabel();
+        txtMontoGastos = new javax.swing.JTextField();
+        lblTituloGastos = new javax.swing.JLabel();
+        btnGuardarGastos = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtaDescripcionGastos = new javax.swing.JTextArea();
+        dtGastos = new com.toedter.calendar.JDateChooser();
+        lblIdUsuarioGasto = new javax.swing.JLabel();
+        txtIdUsuarioGasto = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TblGastos = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -719,8 +743,25 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("jMenu3");
-        jMenuBar1.add(jMenu3);
+        mbContabilidad.setText("Contabilidad");
+
+        miPagos.setText("Pagos");
+        miPagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miPagosActionPerformed(evt);
+            }
+        });
+        mbContabilidad.add(miPagos);
+
+        miGastos.setText("Gastos");
+        miGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miGastosActionPerformed(evt);
+            }
+        });
+        mbContabilidad.add(miGastos);
+
+        jMenuBar1.add(mbContabilidad);
 
         Alquilerdepartamento.setJMenuBar(jMenuBar1);
 
@@ -906,16 +947,16 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 .addGap(57, 57, 57))
         );
 
-        javax.swing.GroupLayout ArendadorLayout = new javax.swing.GroupLayout(Arendador.getContentPane());
-        Arendador.getContentPane().setLayout(ArendadorLayout);
-        ArendadorLayout.setHorizontalGroup(
-            ArendadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout ArrendadorLayout = new javax.swing.GroupLayout(Arrendador.getContentPane());
+        Arrendador.getContentPane().setLayout(ArrendadorLayout);
+        ArrendadorLayout.setHorizontalGroup(
+            ArrendadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        ArendadorLayout.setVerticalGroup(
-            ArendadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ArendadorLayout.createSequentialGroup()
+        ArrendadorLayout.setVerticalGroup(
+            ArrendadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ArrendadorLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1243,17 +1284,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
         jButton12.setText("Cancelar Contrato");
 
         jButton13.setText("Infiormacion del cliente");
@@ -1281,6 +1311,123 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                     .addComponent(jButton14)
                     .addComponent(jButton13))
                 .addContainerGap(51, Short.MAX_VALUE))
+        );
+
+        pnlGastos.setBackground(new java.awt.Color(153, 255, 255));
+
+        lblDescripcionGastos.setText("Descripción:");
+
+        lblMontoGastos.setText("Monto:");
+
+        lblFechaGastos.setText("Fecha:");
+
+        txtMontoGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMontoGastosActionPerformed(evt);
+            }
+        });
+
+        lblTituloGastos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTituloGastos.setText("Registro de Gastos");
+
+        btnGuardarGastos.setText("Guardar");
+        btnGuardarGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarGastosActionPerformed(evt);
+            }
+        });
+
+        txtaDescripcionGastos.setColumns(20);
+        txtaDescripcionGastos.setRows(5);
+        jScrollPane4.setViewportView(txtaDescripcionGastos);
+
+        lblIdUsuarioGasto.setText("Id de Usuario");
+
+        javax.swing.GroupLayout pnlGastosLayout = new javax.swing.GroupLayout(pnlGastos);
+        pnlGastos.setLayout(pnlGastosLayout);
+        pnlGastosLayout.setHorizontalGroup(
+            pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlGastosLayout.createSequentialGroup()
+                .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlGastosLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDescripcionGastos)
+                            .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblFechaGastos)
+                                .addComponent(lblMontoGastos))
+                            .addComponent(lblIdUsuarioGasto))
+                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlGastosLayout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(lblTituloGastos))
+                            .addGroup(pnlGastosLayout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                                    .addComponent(dtGastos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtMontoGastos)
+                                    .addComponent(txtIdUsuarioGasto)))))
+                    .addGroup(pnlGastosLayout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(btnGuardarGastos)))
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+        pnlGastosLayout.setVerticalGroup(
+            pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlGastosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTituloGastos, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIdUsuarioGasto)
+                    .addComponent(txtIdUsuarioGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDescripcionGastos)
+                    .addGroup(pnlGastosLayout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblMontoGastos)
+                            .addComponent(txtMontoGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFechaGastos)
+                            .addComponent(dtGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(btnGuardarGastos)
+                .addGap(38, 38, 38))
+        );
+
+        TblGastos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Descripción", "Monto", "Fecha"
+            }
+        ));
+        jScrollPane3.setViewportView(TblGastos);
+
+        javax.swing.GroupLayout GastosLayout = new javax.swing.GroupLayout(Gastos.getContentPane());
+        Gastos.getContentPane().setLayout(GastosLayout);
+        GastosLayout.setHorizontalGroup(
+            GastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+            .addGroup(GastosLayout.createSequentialGroup()
+                .addGap(96, 96, 96)
+                .addComponent(pnlGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        GastosLayout.setVerticalGroup(
+            GastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(GastosLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(pnlGastos, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1464,7 +1611,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             long timepo_transcurrido = fecha_fin.getTime() - fecha_inicio.getTime();
             TimeUnit unidad = TimeUnit.DAYS;
             dias = unidad.convert(timepo_transcurrido, TimeUnit.MILLISECONDS);
-         
+
         } catch (ParseException ex) {
             java.util.logging.Logger.getLogger(Alquiler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -1476,71 +1623,71 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         switch (a) {
             case 1:
                 btn1.setBackground(Color.red);
-                panelbtn1.setBackground(new Color(163,10,11));
-                panelcbtn1.setBackground(new Color(220,10,11));
+                panelbtn1.setBackground(new Color(163, 10, 11));
+                panelcbtn1.setBackground(new Color(220, 10, 11));
                 btn1.setText("Faltan \n" + dias);
                 break;
 
             case 2:
                 btn2.setBackground(Color.red);
-                panelbtn2.setBackground(new Color(163,10,11));
-                panelcbtn2.setBackground(new Color(220,10,11));
+                panelbtn2.setBackground(new Color(163, 10, 11));
+                panelcbtn2.setBackground(new Color(220, 10, 11));
                 btn2.setText("Faltan \n" + dias);
                 break;
 
             case 3:
                 btn3.setBackground(Color.red);
-                panelbtn3.setBackground(new Color(163,10,11));
-                panelcbtn3.setBackground(new Color(220,10,11));
+                panelbtn3.setBackground(new Color(163, 10, 11));
+                panelcbtn3.setBackground(new Color(220, 10, 11));
                 btn3.setText("Faltan \n" + dias);
                 break;
 
             case 4:
                 btn4.setBackground(Color.red);
-                panelbtn4.setBackground(new Color(163,10,11));
-                panelcbtn4.setBackground(new Color(220,10,11));
+                panelbtn4.setBackground(new Color(163, 10, 11));
+                panelcbtn4.setBackground(new Color(220, 10, 11));
                 btn4.setText("Faltan \n" + dias);
                 break;
 
             case 5:
                 btn5.setBackground(Color.red);
-                panelbtn5.setBackground(new Color(163,10,11));
-                panelcbtn5.setBackground(new Color(220,10,11));
+                panelbtn5.setBackground(new Color(163, 10, 11));
+                panelcbtn5.setBackground(new Color(220, 10, 11));
                 btn5.setText("Faltan \n" + dias);
                 break;
 
             case 6:
                 btn6.setBackground(Color.red);
-                panelbtn6.setBackground(new Color(163,10,11));
-                panelcbtn6.setBackground(new Color(220,10,11));
+                panelbtn6.setBackground(new Color(163, 10, 11));
+                panelcbtn6.setBackground(new Color(220, 10, 11));
                 btn6.setText("Faltan \n" + dias);
                 break;
 
             case 7:
                 btn7.setBackground(Color.red);
-                panelbtn7.setBackground(new Color(163,10,11));
-                panelcbtn7.setBackground(new Color(220,10,11));
+                panelbtn7.setBackground(new Color(163, 10, 11));
+                panelcbtn7.setBackground(new Color(220, 10, 11));
                 btn7.setText("Faltan \n" + dias);
                 break;
 
             case 8:
                 btn8.setBackground(Color.red);
-                panelbtn8.setBackground(new Color(163,10,11));
-                panelcbtn8.setBackground(new Color(220,10,11));
+                panelbtn8.setBackground(new Color(163, 10, 11));
+                panelcbtn8.setBackground(new Color(220, 10, 11));
                 btn8.setText("Faltan \n" + dias);
                 break;
 
             case 9:
                 btn9.setBackground(Color.red);
-                panelbtn9.setBackground(new Color(163,10,11));
-                panelcbtn9.setBackground(new Color(220,10,11));
+                panelbtn9.setBackground(new Color(163, 10, 11));
+                panelcbtn9.setBackground(new Color(220, 10, 11));
                 btn9.setText("Faltan \n" + dias);
                 break;
 
             case 10:
                 btn10.setBackground(Color.red);
-                panelbtn10.setBackground(new Color(163,10,11));
-                panelcbtn10.setBackground(new Color(220,10,11));
+                panelbtn10.setBackground(new Color(163, 10, 11));
+                panelcbtn10.setBackground(new Color(220, 10, 11));
                 btn10.setText("Faltan \n" + dias);
                 break;
 
@@ -1553,72 +1700,72 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
         switch (a) {
             case 1:
-               // btn1.setBackground(Color.GREEN);
-                panelbtn1.setBackground(new Color(76,131,76));
-                panelcbtn1.setBackground(new Color(6,163,8));
+                // btn1.setBackground(Color.GREEN);
+                panelbtn1.setBackground(new Color(76, 131, 76));
+                panelcbtn1.setBackground(new Color(6, 163, 8));
                 btn1.setText("Disponible");
                 break;
 
             case 2:
                 btn2.setBackground(Color.GREEN);
-                panelbtn2.setBackground(new Color(76,131,76));
-                panelcbtn2.setBackground(new Color(6,163,8));
+                panelbtn2.setBackground(new Color(76, 131, 76));
+                panelcbtn2.setBackground(new Color(6, 163, 8));
                 btn2.setText("Disponible");
                 break;
 
             case 3:
                 btn3.setBackground(Color.GREEN);
-                panelbtn3.setBackground(new Color(76,131,76));
-                panelcbtn3.setBackground(new Color(6,163,8));
+                panelbtn3.setBackground(new Color(76, 131, 76));
+                panelcbtn3.setBackground(new Color(6, 163, 8));
                 btn3.setText("Disponible");
                 break;
 
             case 4:
                 btn4.setBackground(Color.GREEN);
-                panelbtn5.setBackground(new Color(76,131,76));
-                panelcbtn5.setBackground(new Color(6,163,8));
+                panelbtn5.setBackground(new Color(76, 131, 76));
+                panelcbtn5.setBackground(new Color(6, 163, 8));
                 btn4.setText("Disponible");
                 break;
 
             case 5:
                 btn5.setBackground(Color.GREEN);
-                panelbtn4.setBackground(new Color(76,131,76));
-                panelcbtn4.setBackground(new Color(6,163,8));
+                panelbtn4.setBackground(new Color(76, 131, 76));
+                panelcbtn4.setBackground(new Color(6, 163, 8));
                 btn5.setText("Disponible");
                 break;
 
             case 6:
                 btn6.setBackground(Color.GREEN);
-                panelbtn6.setBackground(new Color(76,131,76));
-                panelcbtn6.setBackground(new Color(6,163,8));
+                panelbtn6.setBackground(new Color(76, 131, 76));
+                panelcbtn6.setBackground(new Color(6, 163, 8));
                 btn6.setText("Disponible");
                 break;
 
             case 7:
                 btn7.setBackground(Color.GREEN);
-                panelbtn7.setBackground(new Color(76,131,76));
-                panelcbtn7.setBackground(new Color(6,163,8));
+                panelbtn7.setBackground(new Color(76, 131, 76));
+                panelcbtn7.setBackground(new Color(6, 163, 8));
                 btn7.setText("Disponible");
                 break;
 
             case 8:
                 btn8.setBackground(Color.GREEN);
-                panelbtn8.setBackground(new Color(76,131,76));
-                panelcbtn8.setBackground(new Color(6,163,8));
+                panelbtn8.setBackground(new Color(76, 131, 76));
+                panelcbtn8.setBackground(new Color(6, 163, 8));
                 btn8.setText("Disponible");
                 break;
 
             case 9:
                 btn9.setBackground(Color.GREEN);
-                panelbtn9.setBackground(new Color(76,131,76));
-                panelcbtn9.setBackground(new Color(6,163,8));
+                panelbtn9.setBackground(new Color(76, 131, 76));
+                panelcbtn9.setBackground(new Color(6, 163, 8));
                 btn9.setText("Disponible");
                 break;
 
             case 10:
                 btn10.setBackground(Color.GREEN);
-                panelbtn10.setBackground(new Color(76,131,76));
-                panelcbtn10.setBackground(new Color(6,163,8));
+                panelbtn10.setBackground(new Color(76, 131, 76));
+                panelcbtn10.setBackground(new Color(6, 163, 8));
                 btn10.setText("Disponible");
                 break;
 
@@ -1627,9 +1774,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         }
     }
 
-    
-    
-    public void validarCuartos(){
+    public void validarCuartos() {
         try {
             consultarRenta();
 
@@ -1654,7 +1799,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                         if (i < TablaContrato.getRowCount() - 1) {
                             break;
                         } else {
-                              
+
                         }
                     } else {
                         CuatoVacio(j);
@@ -1670,7 +1815,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             java.util.logging.Logger.getLogger(Alquiler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
-    
+
 
     private void BtnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarActionPerformed
 
@@ -1775,42 +1920,108 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     }
 
+    void limpiar() {
+        //txtaDescripcionGastos.setText("");
+        //txtMontoGastos.setText("");
+    }
+
+    public void guardar() {
+        /*try {
+            Statement s = m.conectaBase(bd).createStatement();
+            PreparedStatement ps = m.conectaBase(bd).prepareStatement("INSERT INTO " + TablaGastos + "(descripcion,monto,fechagasto) values (?,?,?)");
+            //ps.setInt(1, Integer.parseInt(idcuartos));
+            ps.setString(1, Nombre);
+            ps.setString(2, monto);
+            //ps.setDate(4, java.sql.Date.valueOf(FechaFin));
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "datos insertados correctamente");
+            m.conectaBase(bd).close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }*/
+
+        try {
+            Class.forName("org.postgresql.Driver");//Registrando el driver
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Statement s = con.createStatement();
+            String insertar = "insert into gasto(idusuario, descripcion , monto, fechagasto)"
+                    + "values('" + txtIdUsuarioGasto.getText() + "','" + txtaDescripcionGastos.getText() + "','" + txtMontoGastos.getText() + "','" + dtGastos.getDate() + "')";
+            s.executeUpdate(insertar);
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void mostrar() {
+        try {
+            Class.forName("org.postgresql.Driver");//Registrando el driver
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Statement s = con.createStatement();
+            ResultSet rs;
+            String consulta = "select * from gasto";
+            rs = s.executeQuery(consulta);
+            while (rs.next()) {
+
+                //Se crea un arreglo de tipo objeto
+                Object[] objetos = new Object[3];
+                //Se le asignan los datos a la respectiva columna de la tabla
+                objetos[0] = rs.getString(4);
+                objetos[1] = rs.getString(3);
+                objetos[2] = rs.getString(5);
+                //objetos[3]=rs.getString(4);
+                //objetos[4]=rs.getString(5);
+                //objetos[5]=rs.getString(6);
+
+                //Añade las filas que se vayan generando
+                modelo2.addRow(objetos);
+                //Muestra la tabla con las filas y datos de las columnas generadas
+                //TblGastos.setModel(modelo2);
+
+                /*System.out.println("Id: " + rs.getString(1));
+                       System.out.println("Nombre: " + rs.getString(2));
+                       System.out.println("Edad: " + rs.getString(3));
+                       System.out.println("Matricula: " + rs.getString(4));
+                       System.out.println("Carrera : " + rs.getString(5));
+                       System.out.println("Contraseña : " + rs.getString(6));
+                       System.out.println("\n");*/
+            }
+            rs.close();
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        TblGastos.setModel(modelo2);
+    }
+
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         // TODO add your handling code here:
-
-
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        //         JOptionPane.showMessageDialog(null,"Hola milo");
-
-        Arendador.setBounds(700, 550, 750, 650);
-        Arendador.setLocationRelativeTo(null);
-        Arendador.setModal(true);
-        Arendador.setVisible(true);
+        Arrendador.setBounds(700, 550, 750, 650);
+        Arrendador.setLocationRelativeTo(null);
+        Arrendador.setModal(true);
+        Arrendador.setVisible(true);
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         consultarRenta();
-
         Contratos.setBounds(700, 550, 650, 600);
         Contratos.setLocationRelativeTo(null);
         Contratos.setModal(true);
         Contratos.setVisible(true);
-
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMenuItem3AncestorAdded
         // TODO add your handling code here:
-
     }//GEN-LAST:event_jMenuItem3AncestorAdded
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-
         Habitaciones.setBounds(700, 550, 700, 600);
         Habitaciones.setLocationRelativeTo(null);
         Habitaciones.setModal(true);
@@ -1848,7 +2059,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         m.insertaRenta(bd, TablaRenta, jTextField9.getText(), jTextField11.getText(), data, data1);
         limpiaTabla(modelo1);
         consultarRenta();
-
 
 
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -1983,22 +2193,19 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        
-         if (TablaContrato.getSelectedRow()!=-1) {
-            int b=  (int) TablaContrato.getValueAt(TablaContrato.getSelectedRow(),0);
-             m.eliminarCliente(bd, TablaRenta, b);
+
+        if (TablaContrato.getSelectedRow() != -1) {
+            int b = (int) TablaContrato.getValueAt(TablaContrato.getSelectedRow(), 0);
+            m.eliminarCliente(bd, TablaRenta, b);
             limpiaTabla(modelo1);
             consultarRenta();
-             
+
         } else {
-           
-           JOptionPane.showMessageDialog(null,"error no hay fila seleccionada"); 
+
+            JOptionPane.showMessageDialog(null, "error no hay fila seleccionada");
         }
-         
-         
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void TablaContratoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaContratoMouseClicked
@@ -2013,8 +2220,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         txtcPreciovm.setText(String.valueOf(tablaInventario.getValueAt(seleccionar,6))); 
         txtPreciocm.setText(String.valueOf(tablaInventario.getValueAt(seleccionar,7)));
         txtcantm.setText(String.valueOf(tablaInventario.getValueAt(seleccionar,8)));*/
-        
-        
+
+
     }//GEN-LAST:event_TablaContratoMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -2022,17 +2229,14 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        
-        
+
         //Este evento es cuando le damos en cerra la pestalla
-        
-        
-        
+
     }//GEN-LAST:event_formWindowClosing
 
     private void ContratosWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_ContratosWindowClosing
         // VENTANA DE CERRRA DE CONTRATOS
-        
+
         validarCuartos();
     }//GEN-LAST:event_ContratosWindowClosing
 
@@ -2042,48 +2246,48 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     private void loginpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginpanelMouseEntered
         // Accion para el panel  de logiarse
-        
-       loginpanel.setBackground(new Color(0,156,223));
+
+        loginpanel.setBackground(new Color(0, 156, 223));
     }//GEN-LAST:event_loginpanelMouseEntered
 
     private void loginpanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginpanelMouseExited
         //  Accion para el panel  de logiarse
-        loginpanel.setBackground(new Color(0,134,190));
+        loginpanel.setBackground(new Color(0, 134, 190));
     }//GEN-LAST:event_loginpanelMouseExited
 
     private void BtnIniciarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarMouseEntered
         // Boton
-            BtnIniciar.setBackground(new Color(0,156,223));
+        BtnIniciar.setBackground(new Color(0, 156, 223));
     }//GEN-LAST:event_BtnIniciarMouseEntered
 
     private void BtnIniciarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIniciarMouseExited
         // TODO add your handling code here:
-        BtnIniciar.setBackground(new Color(0,134,190));
+        BtnIniciar.setBackground(new Color(0, 134, 190));
     }//GEN-LAST:event_BtnIniciarMouseExited
 
     private void usuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usuarioMousePressed
         // Evento del usuairo
-       if(usuario.getText().equals("Ingrese su nombre de usuario")){
-           usuario.setText("");
-           usuario.setForeground(Color.BLACK);
-       }
-       if(String.valueOf(pass1.getPassword()).isEmpty()){
-           pass1.setText("hola");
-           pass1.setForeground(Color.gray);
-       }
-        
+        if (usuario.getText().equals("Ingrese su nombre de usuario")) {
+            usuario.setText("");
+            usuario.setForeground(Color.BLACK);
+        }
+        if (String.valueOf(pass1.getPassword()).isEmpty()) {
+            pass1.setText("hola");
+            pass1.setForeground(Color.gray);
+        }
+
     }//GEN-LAST:event_usuarioMousePressed
 
     private void pass1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pass1MousePressed
         // TODO add your handling code here:
-          if(String.valueOf(pass1.getPassword()).equals("hola")){
-           pass1.setText("");
-           pass1.setForeground(Color.BLACK);
-       }
-       if(usuario.getText().isEmpty()){
-           usuario.setText("Ingrese su nombre de usuario");
-           usuario.setForeground(Color.gray);
-       }
+        if (String.valueOf(pass1.getPassword()).equals("hola")) {
+            pass1.setText("");
+            pass1.setForeground(Color.BLACK);
+        }
+        if (usuario.getText().isEmpty()) {
+            usuario.setText("Ingrese su nombre de usuario");
+            usuario.setForeground(Color.gray);
+        }
     }//GEN-LAST:event_pass1MousePressed
 
     private void usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usuarioKeyPressed
@@ -2097,6 +2301,30 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn1ActionPerformed
+
+    private void txtMontoGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoGastosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMontoGastosActionPerformed
+
+    private void btnGuardarGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarGastosActionPerformed
+        // TODO add your handling code here:
+        guardar();
+        limpiar();
+        mostrar();
+
+    }//GEN-LAST:event_btnGuardarGastosActionPerformed
+
+    private void miGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGastosActionPerformed
+        // TODO add your handling code here:
+        Gastos.setBounds(0, 0, 600, 500);
+        Gastos.setModal(true);
+        Gastos.setVisible(true);
+    }//GEN-LAST:event_miGastosActionPerformed
+
+    private void miPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPagosActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_miPagosActionPerformed
     public void horaActual() {
         Calendar ca = new GregorianCalendar();
         Date da = new Date();
@@ -2216,15 +2444,17 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog Alquilerdepartamento;
-    private javax.swing.JDialog Arendador;
+    private javax.swing.JDialog Arrendador;
     private javax.swing.JButton BtnIniciar;
     private javax.swing.JDialog Contratos;
     private javax.swing.JDialog DatosPers;
     private com.toedter.calendar.JDateChooser FechaFin;
     private com.toedter.calendar.JDateChooser FechaInicio;
+    private javax.swing.JDialog Gastos;
     private javax.swing.JDialog Habitaciones;
     private javax.swing.JDialog Opciones;
     private javax.swing.JTable TablaContrato;
+    private javax.swing.JTable TblGastos;
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btn2;
@@ -2235,6 +2465,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btn7;
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
+    private javax.swing.JButton btnGuardarGastos;
+    private com.toedter.calendar.JDateChooser dtGastos;
     private javax.swing.JLabel hora2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -2250,7 +2482,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -2282,7 +2513,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -2301,6 +2531,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField10;
@@ -2319,8 +2551,16 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel lblDescripcionGastos;
+    private javax.swing.JLabel lblFechaGastos;
+    private javax.swing.JLabel lblIdUsuarioGasto;
+    private javax.swing.JLabel lblMontoGastos;
+    private javax.swing.JLabel lblTituloGastos;
     public static javax.swing.JLabel letrero;
     private javax.swing.JPanel loginpanel;
+    private javax.swing.JMenu mbContabilidad;
+    private javax.swing.JMenuItem miGastos;
+    private javax.swing.JMenuItem miPagos;
     private javax.swing.JPanel panelbtn1;
     private javax.swing.JPanel panelbtn10;
     private javax.swing.JPanel panelbtn2;
@@ -2343,6 +2583,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel panelcbtn9;
     private javax.swing.JSeparator pass;
     private javax.swing.JPasswordField pass1;
+    private javax.swing.JPanel pnlGastos;
+    private javax.swing.JTextField txtIdUsuarioGasto;
+    private javax.swing.JTextField txtMontoGastos;
+    private javax.swing.JTextArea txtaDescripcionGastos;
     private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }

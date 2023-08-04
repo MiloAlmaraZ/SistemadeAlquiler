@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class Metodos {
 
-    String pass = "milo";
+    String pass = "rajkire16";
     String user = "postgres";
     String host = "localhost";
     Connection con1 = null;
