@@ -150,6 +150,28 @@ public class Metodos {
         }
 
     }
+    
+    
+    
+     public void DatosPersona(String bd) {
+        
+        String SQL = "select fechainicio from Renta";
+
+        try {
+
+            Statement s = conectaBase(bd).createStatement();
+            ResultSet rs = s.executeQuery(SQL);
+            if (rs.next()) {
+
+                nom = rs.getString(1);
+
+            }
+            System.out.println("Fecha inicio" + nom);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error usuario" + e);
+        }
+
+    }
 
     
     public void fechaFin(String bd, LocalDate Fecha) throws SQLException {
