@@ -44,6 +44,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
      */
     DefaultTableModel modelo1 = new DefaultTableModel();
     DefaultTableModel modelo2 = new DefaultTableModel();
+    DefaultTableModel modelo3 = new DefaultTableModel();
     private JLabel jLabel22;
     private JLabel jLabel24;
 
@@ -55,6 +56,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         FechaInicio.setMinSelectableDate(new Date());
         modelo1 = (DefaultTableModel) TablaContrato.getModel();
         modelo2 = (DefaultTableModel) TblGastos.getModel();
+        modelo3 = (DefaultTableModel) pagos_tabla.getModel();
     }
 
     Metodos m = new Metodos();
@@ -72,7 +74,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     String BD = "renta";
     String user = "postgres";
     String passErik = "rajkire16";
-
+    String password = "heber123.";
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -214,6 +216,22 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         txtIdUsuarioGasto = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         TblGastos = new javax.swing.JTable();
+        Pagos = new javax.swing.JDialog();
+        jPanel15 = new javax.swing.JPanel();
+        pagos_titulo = new javax.swing.JLabel();
+        pagos_idrenta = new javax.swing.JLabel();
+        pagos_nombre = new javax.swing.JLabel();
+        pagos_fecha_pago = new javax.swing.JLabel();
+        pagos_monto = new javax.swing.JLabel();
+        pagos_comprobante = new javax.swing.JLabel();
+        pagos_tablasss = new javax.swing.JScrollPane();
+        pagos_tabla = new javax.swing.JTable();
+        txtMonto = new javax.swing.JTextField();
+        txtComprobantePago = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtIdRenta = new javax.swing.JTextField();
+        FechaPago = new com.toedter.calendar.JDateChooser();
+        btnGuardarPago = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -1505,6 +1523,121 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 .addContainerGap())
         );
 
+        pagos_titulo.setText("Pagos");
+
+        pagos_idrenta.setText("id renta:");
+
+        pagos_nombre.setText("Nombre:");
+
+        pagos_fecha_pago.setText("Fecha pago:");
+
+        pagos_monto.setText("Monto:");
+
+        pagos_comprobante.setText("Comprobante pago:");
+
+        pagos_tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        pagos_tablasss.setViewportView(pagos_tabla);
+
+        btnGuardarPago.setText("guardar");
+        btnGuardarPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarPagoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(pagos_tablasss, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pagos_fecha_pago)
+                            .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(pagos_nombre)
+                                .addComponent(pagos_idrenta))
+                            .addComponent(pagos_monto)
+                            .addComponent(pagos_comprobante))
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel15Layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(pagos_titulo)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                                        .addComponent(txtComprobantePago, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                                        .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(FechaPago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(txtIdRenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(61, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnGuardarPago)
+                .addGap(88, 88, 88))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(pagos_titulo)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtIdRenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pagos_idrenta))
+                .addGap(13, 13, 13)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pagos_nombre))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pagos_fecha_pago)
+                    .addComponent(FechaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pagos_monto)
+                    .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pagos_comprobante)
+                    .addComponent(txtComprobantePago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(btnGuardarPago)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pagos_tablasss, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout PagosLayout = new javax.swing.GroupLayout(Pagos.getContentPane());
+        Pagos.getContentPane().setLayout(PagosLayout);
+        PagosLayout.setHorizontalGroup(
+            PagosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PagosLayout.setVerticalGroup(
+            PagosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PagosLayout.createSequentialGroup()
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -2401,10 +2534,74 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_miGastosActionPerformed
 
     private void miPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPagosActionPerformed
-        // TODO add your handling code here:
-
+        Pagos.setBounds(0, 0, 600, 500);
+        Pagos.setModal(true);
+        Pagos.setVisible(true);
     }//GEN-LAST:event_miPagosActionPerformed
-    public void horaActual() {
+
+    private void btnGuardarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPagoActionPerformed
+        guardarpagos();
+        mostrarpagos();
+    }//GEN-LAST:event_btnGuardarPagoActionPerformed
+
+     public void guardarpagos(){
+     
+         
+        try{
+        Class.forName("org.postgresql.Driver");//Registrando el driver
+                   Connection con=DriverManager.getConnection("jdbc:postgresql://"+host+"/"+bd,user,password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+                   Statement s = con.createStatement();
+                   String insertar= "insert into pago(idrenta, nombre , fechapago, monto, comprobantepago)"
+                           + "values('" + txtIdRenta.getText() + "','" + txtNombre.getText() + "','" + FechaPago.getDate()+ "','" + txtMonto.getText()+ "','" + txtComprobantePago.getText() + "')";
+                   s.executeUpdate(insertar);
+        con.close();
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+     
+     }
+     
+      public void mostrarpagos() {
+        try {
+             Class.forName("org.postgresql.Driver");//Registrando el driver
+                   Connection con=DriverManager.getConnection("jdbc:postgresql://"+host+"/"+bd,user,password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+                   Statement s = con.createStatement();
+            ResultSet rs;
+            String consulta = "select * from pago";
+            rs = s.executeQuery(consulta);
+            while (rs.next()) {
+
+                //Se crea un arreglo de tipo objeto
+                Object[] objetos = new Object[5];
+                //Se le asignan los datos a la respectiva columna de la tabla
+                objetos[0] = rs.getString(2);
+                objetos[1] = rs.getString(3);
+                objetos[2] = rs.getString(4);
+                objetos[3]=rs.getString(5);
+                objetos[4]=rs.getString(6);
+                //objetos[5]=rs.getString(6);
+
+                //Añade las filas que se vayan generando
+                modelo3.addRow(objetos);
+                //Muestra la tabla con las filas y datos de las columnas generadas
+                //TblGastos.setModel(modelo2);
+
+                /*System.out.println("Id: " + rs.getString(1));
+                       System.out.println("Nombre: " + rs.getString(2));
+                       System.out.println("Edad: " + rs.getString(3));
+                       System.out.println("Matricula: " + rs.getString(4));
+                       System.out.println("Carrera : " + rs.getString(5));
+                       System.out.println("Contraseña : " + rs.getString(6));
+                       System.out.println("\n");*/
+            }
+            rs.close();
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        pagos_tabla.setModel(modelo3);
+    }
+          public void horaActual() {
         Calendar ca = new GregorianCalendar();
         Date da = new Date();
         ca.setTime(da);
@@ -2530,11 +2727,13 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel EstadoCivil;
     private com.toedter.calendar.JDateChooser FechaFin;
     private com.toedter.calendar.JDateChooser FechaInicio;
+    private com.toedter.calendar.JDateChooser FechaPago;
     private javax.swing.JDialog Gastos;
     private javax.swing.JDialog Habitaciones;
     private javax.swing.JLabel NombreUsuario;
     private javax.swing.JLabel NumTelefono;
     private javax.swing.JDialog Opciones;
+    private javax.swing.JDialog Pagos;
     private javax.swing.JTable TablaContrato;
     private javax.swing.JTable TblGastos;
     private javax.swing.JLabel Testigo;
@@ -2549,6 +2748,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
     private javax.swing.JButton btnGuardarGastos;
+    private javax.swing.JButton btnGuardarPago;
     private com.toedter.calendar.JDateChooser dtGastos;
     private javax.swing.JLabel hora2;
     private javax.swing.JButton jButton1;
@@ -2606,6 +2806,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
@@ -2643,6 +2844,14 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JMenu mbContabilidad;
     private javax.swing.JMenuItem miGastos;
     private javax.swing.JMenuItem miPagos;
+    private javax.swing.JLabel pagos_comprobante;
+    private javax.swing.JLabel pagos_fecha_pago;
+    private javax.swing.JLabel pagos_idrenta;
+    private javax.swing.JLabel pagos_monto;
+    private javax.swing.JLabel pagos_nombre;
+    private javax.swing.JTable pagos_tabla;
+    private javax.swing.JScrollPane pagos_tablasss;
+    private javax.swing.JLabel pagos_titulo;
     private javax.swing.JPanel panelbtn1;
     private javax.swing.JPanel panelbtn10;
     private javax.swing.JPanel panelbtn2;
@@ -2666,8 +2875,12 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JSeparator pass;
     private javax.swing.JPasswordField pass1;
     private javax.swing.JPanel pnlGastos;
+    private javax.swing.JTextField txtComprobantePago;
+    private javax.swing.JTextField txtIdRenta;
     private javax.swing.JTextField txtIdUsuarioGasto;
+    private javax.swing.JTextField txtMonto;
     private javax.swing.JTextField txtMontoGastos;
+    private javax.swing.JTextField txtNombre;
     private javax.swing.JTextArea txtaDescripcionGastos;
     private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
