@@ -9,5 +9,5 @@ package sistemadealquiler;
  Funciona?
  */
 public class ClasePrueba {
-    
+    //Cualquier cosa
 }
