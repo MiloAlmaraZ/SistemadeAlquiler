@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author emili
+ * @author emili  cualquier cosa
  */
 public class Metodos {
 
