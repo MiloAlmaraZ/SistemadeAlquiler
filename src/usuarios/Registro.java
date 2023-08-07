@@ -49,7 +49,7 @@ public class Registro extends javax.swing.JFrame {
         DefaultTableModel modelo=new DefaultTableModel();
         
         modelo.addColumn("idusuario");
-        modelo.addColumn("idrol");
+        modelo.addColumn("rol");
         modelo.addColumn("nombre");
         modelo.addColumn("telefono");
         modelo.addColumn("usuario");
@@ -364,6 +364,7 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarEActionPerformed
 
     private void btnActualizarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarEActionPerformed
+       
         try {
             PreparedStatement ps= cn.prepareStatement("UPDATE usuario SET idrol='"+txtIdRol.getText()+
                                                                        "',nombre='"+txtNombre.getText()+

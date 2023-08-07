@@ -47,6 +47,28 @@ public class Metodos {
         }
         return con;
     }
+    
+//    public class Conexion {
+//    Connection cn;
+//    //constructor vacio
+    public Connection conexion(){
+    Connection cn = null;
+        try {
+                Class.forName("org.postgresql.Driver");
+                
+                cn = DriverManager.getConnection("jdbc:postgresql://localhost/renta","postgres","fernando");
+                
+                System.out.println("conectado");
+                
+        } catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+        }
+        
+        return cn;
+    }
+//}
+    
 
     public int contraseña(String contraseña, String bd) {//Validar contraseña 
 
@@ -213,5 +235,8 @@ public class Metodos {
         }
 
     }
-
+    
+   
+    
+   
 }
