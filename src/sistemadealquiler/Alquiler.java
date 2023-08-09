@@ -2863,14 +2863,15 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private void btnGuardarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEActionPerformed
 
         try {
-            PreparedStatement ps=cn.prepareStatement("INSERT INTO usuario (nombre,telefono,usuario,contrasena,correo) VALUES(?,?,?,?,?)");
+            PreparedStatement ps=cn.prepareStatement("INSERT INTO usuario (idrol,Nombre,Telefono,Usuario,Contrasena,Correo) VALUES(?,?,?,?,?,?)");
 
-            //  ps.setString(1,txtIdRol.get());
-            ps.setString(1,txtNombre.getText());
-            ps.setString(2,txtTelefono.getText());
-            ps.setString(3,txtUsuario.getText());
-            ps.setString(4,txtContrasena.getText());
-            ps.setString(5,txtCorreo.getText());
+           
+            ps.setString(1,txtIdUsuario.getText());
+            ps.setString(2,txtNombre.getText());
+            ps.setString(3,txtTelefono.getText());
+            ps.setString(4,txtUsuario.getText());
+            ps.setString(5,txtContrasena.getText());
+            ps.setString(6,txtCorreo.getText());
 
             ps.executeUpdate();
 
