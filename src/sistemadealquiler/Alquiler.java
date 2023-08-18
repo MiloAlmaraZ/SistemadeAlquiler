@@ -329,8 +329,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         jLabel1 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        pass1 = new javax.swing.JPasswordField();
-        usuario = new javax.swing.JTextField();
+        txtLoginPass = new javax.swing.JPasswordField();
+        txtLoginUsuario = new javax.swing.JTextField();
         pass = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         loginpanel = new javax.swing.JPanel();
@@ -1253,7 +1253,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1980,40 +1980,45 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         jLabel2.setText("Contraseña");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 100, -1));
 
-        pass1.setForeground(new java.awt.Color(204, 204, 204));
-        pass1.setText("hola");
-        pass1.setBorder(null);
-        pass1.addMouseListener(new java.awt.event.MouseAdapter() {
+        txtLoginPass.setForeground(new java.awt.Color(204, 204, 204));
+        txtLoginPass.setText("hola");
+        txtLoginPass.setBorder(null);
+        txtLoginPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                pass1MousePressed(evt);
+                txtLoginPassMousePressed(evt);
             }
         });
-        pass1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                pass1KeyPressed(evt);
-            }
-        });
-        jPanel1.add(pass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 400, -1));
-
-        usuario.setForeground(new java.awt.Color(204, 204, 204));
-        usuario.setText("Ingrese su nombre de usuario");
-        usuario.setBorder(null);
-        usuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                usuarioMousePressed(evt);
-            }
-        });
-        usuario.addActionListener(new java.awt.event.ActionListener() {
+        txtLoginPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usuarioActionPerformed(evt);
+                txtLoginPassActionPerformed(evt);
             }
         });
-        usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtLoginPass.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                usuarioKeyPressed(evt);
+                txtLoginPassKeyPressed(evt);
             }
         });
-        jPanel1.add(usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 400, -1));
+        jPanel1.add(txtLoginPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 400, -1));
+
+        txtLoginUsuario.setForeground(new java.awt.Color(204, 204, 204));
+        txtLoginUsuario.setText("Ingrese su nombre de usuario");
+        txtLoginUsuario.setBorder(null);
+        txtLoginUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtLoginUsuarioMousePressed(evt);
+            }
+        });
+        txtLoginUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLoginUsuarioActionPerformed(evt);
+            }
+        });
+        txtLoginUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtLoginUsuarioKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txtLoginUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 400, -1));
 
         pass.setBackground(new java.awt.Color(153, 153, 153));
         pass.setForeground(new java.awt.Color(0, 0, 0));
@@ -2107,9 +2112,9 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
+    private void txtLoginUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usuarioActionPerformed
+    }//GEN-LAST:event_txtLoginUsuarioActionPerformed
 
     public void CalcularFehca(String fechafin) {
         try {
@@ -2338,26 +2343,47 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
 
     private void BtnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarActionPerformed
+        try {
+            String usuario=txtLoginUsuario.getText();
+            String contrasena=String.valueOf(txtLoginPass.getPassword());
+//          
+            String query="SELECT * FROM usuario WHERE usuario='"+usuario+"' and contrasena='"+contrasena+"'";
+            Statement st=m.conexion().createStatement();
+            ResultSet rs=st.executeQuery(query);
 
-        validarCuartos();
-
-// Validar usuario y contraseña
-        //Codigo para sacar la diferencia entre dos fechas
-        String usuario = "juan";
-        String contraseña = "123";
-        if (usuario.equals(usuario) && contraseña.equals(contraseña)) {
-
-            Habitaciones();
-            JOptionPane.showMessageDialog(null, "Bienvenido");
-            Alquilerdepartamento.setBounds(700, 550, 1000, 650);
-            Alquilerdepartamento.setLocationRelativeTo(null);
-            Alquilerdepartamento.setModal(true);
-            Alquilerdepartamento.setVisible(true);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "usuario o contraseña incorrecta");
-
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null, "Bienvenido");
+                
+                  Alquilerdepartamento.setBounds(700, 550, 1000, 650);
+                  Alquilerdepartamento.setLocationRelativeTo(null);
+                  Alquilerdepartamento.setModal(true);
+                  Alquilerdepartamento.setVisible(true);
+               
+            }else{
+                JOptionPane.showMessageDialog(this,"usuario o contraseña incorrecta");
+            }    
+        } catch (Exception e) {
+            System.err.println("Error ..."+e);
         }
+         //validarCuartos();
+
+//// Validar usuario y contraseña
+//        //Codigo para sacar la diferencia entre dos fechas
+//        String usuario = "juan";
+//        String contraseña = "123";
+//        if (usuario.equals(usuario) && contraseña.equals(contraseña)) {
+//
+//            Habitaciones();
+//            JOptionPane.showMessageDialog(null, "Bienvenido");
+//            Alquilerdepartamento.setBounds(700, 550, 1000, 650);
+//            Alquilerdepartamento.setLocationRelativeTo(null);
+//            Alquilerdepartamento.setModal(true);
+//            Alquilerdepartamento.setVisible(true);
+//
+//        } else {
+//            JOptionPane.showMessageDialog(null, "usuario o contraseña incorrecta");
+//
+//        }
 
     }//GEN-LAST:event_BtnIniciarActionPerformed
 
@@ -2789,38 +2815,38 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         BtnIniciar.setBackground(new Color(0, 134, 190));
     }//GEN-LAST:event_BtnIniciarMouseExited
 
-    private void usuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usuarioMousePressed
+    private void txtLoginUsuarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLoginUsuarioMousePressed
         // Evento del usuairo
-        if (usuario.getText().equals("Ingrese su nombre de usuario")) {
-            usuario.setText("");
-            usuario.setForeground(Color.BLACK);
+        if (txtLoginUsuario.getText().equals("Ingrese su nombre de usuario")) {
+            txtLoginUsuario.setText("");
+            txtLoginUsuario.setForeground(Color.BLACK);
         }
-        if (String.valueOf(pass1.getPassword()).isEmpty()) {
-            pass1.setText("hola");
-            pass1.setForeground(Color.gray);
+        if (String.valueOf(txtLoginPass.getPassword()).isEmpty()) {
+            txtLoginPass.setText("hola");
+            txtLoginPass.setForeground(Color.gray);
         }
 
-    }//GEN-LAST:event_usuarioMousePressed
+    }//GEN-LAST:event_txtLoginUsuarioMousePressed
 
-    private void pass1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pass1MousePressed
+    private void txtLoginPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLoginPassMousePressed
         // TODO add your handling code here:
-        if (String.valueOf(pass1.getPassword()).equals("hola")) {
-            pass1.setText("");
-            pass1.setForeground(Color.BLACK);
+        if (String.valueOf(txtLoginPass.getPassword()).equals("hola")) {
+            txtLoginPass.setText("");
+            txtLoginPass.setForeground(Color.BLACK);
         }
-        if (usuario.getText().isEmpty()) {
-            usuario.setText("Ingrese su nombre de usuario");
-            usuario.setForeground(Color.gray);
+        if (txtLoginUsuario.getText().isEmpty()) {
+            txtLoginUsuario.setText("Ingrese su nombre de usuario");
+            txtLoginUsuario.setForeground(Color.gray);
         }
-    }//GEN-LAST:event_pass1MousePressed
+    }//GEN-LAST:event_txtLoginPassMousePressed
 
-    private void usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usuarioKeyPressed
+    private void txtLoginUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginUsuarioKeyPressed
         // Presionar Usuario
-    }//GEN-LAST:event_usuarioKeyPressed
+    }//GEN-LAST:event_txtLoginUsuarioKeyPressed
 
-    private void pass1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pass1KeyPressed
+    private void txtLoginPassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginPassKeyPressed
         // Precionar 
-    }//GEN-LAST:event_pass1KeyPressed
+    }//GEN-LAST:event_txtLoginPassKeyPressed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         // TODO add your handling code here:
@@ -2930,6 +2956,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         Usuarios.setModal(true);
         Usuarios.setVisible(true);
     }//GEN-LAST:event_ItemUsuariosActionPerformed
+
+    private void txtLoginPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLoginPassActionPerformed
 
      public void guardarpagos(){
     
@@ -3279,7 +3309,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel panelcbtn8;
     private javax.swing.JPanel panelcbtn9;
     private javax.swing.JSeparator pass;
-    private javax.swing.JPasswordField pass1;
     private javax.swing.JPanel pnlGastos;
     private javax.swing.JTable tablaUsuarios;
     private javax.swing.JTextField txtComprobantePago;
@@ -3288,6 +3317,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txtIdRenta;
     private javax.swing.JTextField txtIdUsuario;
     private javax.swing.JTextField txtIdUsuarioGasto;
+    private javax.swing.JPasswordField txtLoginPass;
+    private javax.swing.JTextField txtLoginUsuario;
     private javax.swing.JTextField txtMonto;
     private javax.swing.JTextField txtMontoGastos;
     private javax.swing.JTextField txtNombre;
@@ -3296,6 +3327,5 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtUsuario;
     private javax.swing.JTextArea txtaDescripcionGastos;
-    private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }
