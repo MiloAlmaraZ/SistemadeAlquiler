@@ -125,14 +125,14 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     static String a2 = "                                                                                                       ";
     String hora, minutos, segundos;
     String bd = "Renta1";
-    String TablaRenta = "Renta";
+    String TablaRenta = "renta";
     int bandera;
     long dias;
     String TablaGastos = "gasto";
     String host = "localhost";
-    String BD = "renta";
+    String BD = "Renta1";
     String user = "postgres";
-    String passErik = "rajkire16";
+    String passErik = "heber123.";
     String password = "heber123.";
     
     /**
@@ -2888,26 +2888,19 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     private void btnGuardarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEActionPerformed
 
-        try {
-            PreparedStatement ps=cn.prepareStatement("INSERT INTO usuario (idrol,Nombre,Telefono,Usuario,Contrasena,Correo) VALUES(?,?,?,?,?,?)");
-
-           
-            ps.setString(1,txtIdUsuario.getText());
-            ps.setString(2,txtNombre.getText());
-            ps.setString(3,txtTelefono.getText());
-            ps.setString(4,txtUsuario.getText());
-            ps.setString(5,txtContrasena.getText());
-            ps.setString(6,txtCorreo.getText());
-
-            ps.executeUpdate();
-
-            limpiar();
-            // mostrartabla("");
-
-        } catch (Exception e) {
-            System.err.println("Error al guardar..."+e);
-            JOptionPane.showMessageDialog(null,"Error en el llenado de la tabla");
+         try {
+            Class.forName("org.postgresql.Driver");//Registrando el driver
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Statement s = con.createStatement();
+            String insertar = "insert into usuario(idrol, nombre , telefono, usuario, contrasena, correo)"
+                    + "values('" + txtRol.getText() + "','" + txtNombre1.getText() + "','" + txtTelefono.getText() + "','" + txtUsuario.getText() + "','" + txtContrasena.getText() + "','" + txtCorreo.getText()+ "')";
+            s.executeUpdate(insertar);
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
+         
+       
     }//GEN-LAST:event_btnGuardarEActionPerformed
 
     private void btnActualizarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarEActionPerformed

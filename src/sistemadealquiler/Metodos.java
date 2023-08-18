@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 public class Metodos {
 
-    String pass = "rajkire16";
+    String pass = "heber123.";
     String user = "postgres";
     String host = "localhost";
     Connection con1 = null;
@@ -56,7 +56,7 @@ public class Metodos {
         try {
                 Class.forName("org.postgresql.Driver");
                 
-                cn = DriverManager.getConnection("jdbc:postgresql://localhost/renta","postgres","fernando");
+                cn = DriverManager.getConnection("jdbc:postgresql://localhost/Renta1","postgres","heber123.");
                 
                 System.out.println("conectado");
                 
