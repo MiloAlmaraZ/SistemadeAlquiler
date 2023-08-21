@@ -11,11 +11,11 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author emili
+ * @author emili  cualquier cosa
  */
 public class Metodos {
 
-    String pass = "rajkire16";
+    String pass = "heber123.";
     String user = "postgres";
     String host = "localhost";
     Connection con1 = null;
@@ -47,6 +47,28 @@ public class Metodos {
         }
         return con;
     }
+    
+//    public class Conexion {
+//    Connection cn;
+//    //constructor vacio
+    public Connection conexion(){
+    Connection cn = null;
+        try {
+                Class.forName("org.postgresql.Driver");
+                
+                cn = DriverManager.getConnection("jdbc:postgresql://localhost/Renta1","postgres","heber123.");
+                
+                System.out.println("conectado");
+                
+        } catch (Exception e) {
+            
+            System.err.println(e.getMessage());
+        }
+        
+        return cn;
+    }
+//}
+    
 
     public int contraseña(String contraseña, String bd) {//Validar contraseña 
 
@@ -213,5 +235,8 @@ public class Metodos {
         }
 
     }
-
+    
+   
+    
+   
 }
