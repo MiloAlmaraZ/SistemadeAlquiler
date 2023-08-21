@@ -42,16 +42,16 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     static String a = "DEPARTAMENTOS LOGUEN                                            DEPARTAMENTOS LOGUEN                 ";
     static String a2 = "                                                                                                       ";
     String hora, minutos, segundos;
-    String bd = "Renta1";
+    //String bd = "Renta1";
     String TablaRenta = "renta";
     int bandera;
     long dias;
     String TablaGastos = "gasto";
     String host = "localhost";
-    String BD = "Renta1";
+    String BD = "renta";
     String user = "potsgres";
     String passErik = "rajkire16";
-    String password = "rajkire16";
+    //String password = "rajkire16";
 
     public Alquiler() {
         initComponents();
@@ -2308,9 +2308,9 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         limpiaTabla(modelo1);
         Object[] ob = new Object[4];
         try {
-            String jdbcUrl = "jdbc:postgresql://localhost/" + bd;
+            String jdbcUrl = "jdbc:postgresql://localhost/" + BD;
             String SQL = "Select  idcuartos,nombre,fechainicio,fechafin from " + TablaRenta + " WHERE fechafin >= ? ORDER BY idcuartos ASC";
-            Connection con2 = DriverManager.getConnection(jdbcUrl, "postgres", "milo");
+            Connection con2 = DriverManager.getConnection(jdbcUrl, "postgres", passErik);
             PreparedStatement statement = con2.prepareStatement(SQL);
             LocalDate fechaActual = LocalDate.now();
             statement.setObject(1, fechaActual);
@@ -2325,7 +2325,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                     System.out.println("YA ESTOY EN LA FUNCION RESULTSET");
                 }
             }
-            m.conectaBase(bd).close();
+            m.conectaBase(BD).close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -2476,7 +2476,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             DatosPers.setLocationRelativeTo(null);
             DatosPers.setModal(true);
             NombreUsuario.setText("HERMILO ALMARAZ VARGAS");
-            EstadoCivil.setText("Sotero");
+            EstadoCivil.setText("Soltero");
             NumTelefono.setText("6961080586");
             Testigo.setText("Juan Manuel");
             DatosPers.setVisible(true);
@@ -2490,7 +2490,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         String data = fechai.format(FechaInicio.getDate());
         String data1 = fechaf.format(FechaFin.getDate());
         System.out.println("Fecha inicio " + data + "\n fechafin " + data1);
-        m.insertaRenta(bd, TablaRenta, jTextField9.getText(), jTextField11.getText(), data, data1);
+        m.insertaRenta(BD, TablaRenta, jTextField9.getText(), jTextField11.getText(), data, data1);
         limpiaTabla(modelo1);
         consultarRenta();
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -2619,7 +2619,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         if (TablaContrato.getSelectedRow() != -1) {
             int b = (int) TablaContrato.getValueAt(TablaContrato.getSelectedRow(), 0);
-            m.eliminarCliente(bd, TablaRenta, b);
+            m.eliminarCliente(BD, TablaRenta, b);
             limpiaTabla(modelo1);
             consultarRenta();
         } else {
@@ -2751,7 +2751,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private void btnGuardarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEActionPerformed
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             String insertar = "insert into usuario(idrol, nombre , telefono, usuario, contrasena, correo)"
                     + "values('" + txtRol.getText() + "','" + txtNombre1.getText() + "','" + txtTelefono.getText() + "','" + txtUsuario.getText() + "','" + txtContrasena.getText() + "','" + txtCorreo.getText() + "')";
@@ -2813,7 +2813,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     public void guardarpagos() {
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + bd, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             String insertar = "insert into pago(idrenta, nombre , fechapago, monto, comprobantepago)"
                     + "values('" + txtIdRenta.getText() + "','" + txtNombre.getText() + "','" + FechaPago.getDate() + "','" + txtMonto.getText() + "','" + txtComprobantePago.getText() + "')";
@@ -2827,7 +2827,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     public void mostrarpagos() {
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + bd, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             ResultSet rs;
             String consulta = "select * from pago";
