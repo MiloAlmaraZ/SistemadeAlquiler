@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sistemadealquiler;
 
 import java.util.Date;
@@ -33,92 +28,15 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author emili
- */
 public class Alquiler extends javax.swing.JFrame implements Runnable {
 
-    /**
-     * Creates new form Alquiler
-     */
     DefaultTableModel modelo1 = new DefaultTableModel();
     DefaultTableModel modelo2 = new DefaultTableModel();
     DefaultTableModel modelo3 = new DefaultTableModel();
     private JLabel jLabel22;
     private JLabel jLabel24;
-    
-    
-
-    public Alquiler() {
-        initComponents();
-        Thread hilo1 = new Thread(this);
-        hilo1.start();
-        this.setLocationRelativeTo(null);
-        FechaInicio.setMinSelectableDate(new Date());
-        modelo1 = (DefaultTableModel) TablaContrato.getModel();
-        modelo2 = (DefaultTableModel) TblGastos.getModel();
-        modelo3 = (DefaultTableModel) pagos_tabla.getModel();
-        
-        txtIdUsuario.setEnabled(false);
-        
-        limpiarTablausuarios();
-        mostrarTablaUsuarios("");
-        
-    }
-    
-    public void mostrarTablaUsuarios(String valor){
-    
-        DefaultTableModel modelo=new DefaultTableModel();
-        
-        modelo.addColumn("idusuario");
-        modelo.addColumn("rol");
-        modelo.addColumn("nombre");
-        modelo.addColumn("telefono");
-        modelo.addColumn("usuario");
-        modelo.addColumn("contrasena");
-        modelo.addColumn("conrreo");
-        
-        tablaUsuarios.setModel(modelo);
-        
-        
-        String sql="SELECT * FROM usuario WHERE CONCAT (nombre) LIKE '%"+valor+"%'";
-        
-        String datos[]=new String[7];
-        
-       Statement st;
-        try {
-            st=cn.createStatement();
-            ResultSet rs=st.executeQuery(sql);
-            
-           while(rs.next()){
-                
-                datos[0]=rs.getString(1);
-                datos[1]=rs.getString(2);
-                datos[2]=rs.getString(3);
-                datos[3]=rs.getString(4);
-                datos[4]=rs.getString(5);
-                datos[5]=rs.getString(6);
-                datos[6]=rs.getString(7);
-                
-                modelo.addRow(datos);
-            }
-            tablaUsuarios.setModel(modelo);
-            
-            
-        } catch (SQLException e) {
-            System.err.println("Error en el llenado de la tabla"+e);
-            JOptionPane.showMessageDialog(null,"Error");
-        }
-        
-        
-    }
-    
-   
-
     Metodos m = new Metodos();
-    Connection cn=m.conexion();
-    
+    Connection cn = m.conexion();
     static int cont = 0;
     static boolean ban = true;
     static String a = "DEPARTAMENTOS LOGUEN                                            DEPARTAMENTOS LOGUEN                 ";
@@ -131,18 +49,65 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     String TablaGastos = "gasto";
     String host = "localhost";
     String BD = "Renta1";
-    String user = "postgres";
-    String passErik = "heber123.";
-    String password = "heber123.";
-    
+    String user = "potsgres";
+    String passErik = "rajkire16";
+    String password = "rajkire16";
+
+    public Alquiler() {
+        initComponents();
+        Thread hilo1 = new Thread(this);
+        hilo1.start();
+        this.setLocationRelativeTo(null);
+        FechaInicio.setMinSelectableDate(new Date());
+        modelo1 = (DefaultTableModel) TablaContrato.getModel();
+        modelo2 = (DefaultTableModel) TblGastos.getModel();
+        modelo3 = (DefaultTableModel) pagos_tabla.getModel();
+        txtIdUsuario.setEnabled(false);
+        limpiarTablausuarios();
+        mostrarTablaUsuarios("");
+    }
+
+    public void mostrarTablaUsuarios(String valor) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("idusuario");
+        modelo.addColumn("rol");
+        modelo.addColumn("nombre");
+        modelo.addColumn("telefono");
+        modelo.addColumn("usuario");
+        modelo.addColumn("contrasena");
+        modelo.addColumn("conrreo");
+        tablaUsuarios.setModel(modelo);
+        String sql = "SELECT * FROM usuario WHERE CONCAT (nombre) LIKE '%" + valor + "%'";
+        String datos[] = new String[7];
+        Statement st;
+        try {
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                datos[0] = rs.getString(1);
+                datos[1] = rs.getString(2);
+                datos[2] = rs.getString(3);
+                datos[3] = rs.getString(4);
+                datos[4] = rs.getString(5);
+                datos[5] = rs.getString(6);
+                datos[6] = rs.getString(7);
+                modelo.addRow(datos);
+            }
+            tablaUsuarios.setModel(modelo);
+        } catch (SQLException e) {
+            System.err.println("Error en el llenado de la tabla" + e);
+            JOptionPane.showMessageDialog(null, "Error");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    
-    
+
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -2125,15 +2090,12 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             long timepo_transcurrido = fecha_fin.getTime() - fecha_inicio.getTime();
             TimeUnit unidad = TimeUnit.DAYS;
             dias = unidad.convert(timepo_transcurrido, TimeUnit.MILLISECONDS);
-
         } catch (ParseException ex) {
             java.util.logging.Logger.getLogger(Alquiler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-
     }
 
     public void CuatoOcupado(int a) {
-
         switch (a) {
             case 1:
                 btn1.setBackground(Color.red);
@@ -2141,77 +2103,66 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 panelcbtn1.setBackground(new Color(220, 10, 11));
                 btn1.setText("Faltan \n" + dias);
                 break;
-
             case 2:
                 btn2.setBackground(Color.red);
                 panelbtn2.setBackground(new Color(163, 10, 11));
                 panelcbtn2.setBackground(new Color(220, 10, 11));
                 btn2.setText("Faltan \n" + dias);
                 break;
-
             case 3:
                 btn3.setBackground(Color.red);
                 panelbtn3.setBackground(new Color(163, 10, 11));
                 panelcbtn3.setBackground(new Color(220, 10, 11));
                 btn3.setText("Faltan \n" + dias);
                 break;
-
             case 4:
                 btn4.setBackground(Color.red);
                 panelbtn4.setBackground(new Color(163, 10, 11));
                 panelcbtn4.setBackground(new Color(220, 10, 11));
                 btn4.setText("Faltan \n" + dias);
                 break;
-
             case 5:
                 btn5.setBackground(Color.red);
                 panelbtn5.setBackground(new Color(163, 10, 11));
                 panelcbtn5.setBackground(new Color(220, 10, 11));
                 btn5.setText("Faltan \n" + dias);
                 break;
-
             case 6:
                 btn6.setBackground(Color.red);
                 panelbtn6.setBackground(new Color(163, 10, 11));
                 panelcbtn6.setBackground(new Color(220, 10, 11));
                 btn6.setText("Faltan \n" + dias);
                 break;
-
             case 7:
                 btn7.setBackground(Color.red);
                 panelbtn7.setBackground(new Color(163, 10, 11));
                 panelcbtn7.setBackground(new Color(220, 10, 11));
                 btn7.setText("Faltan \n" + dias);
                 break;
-
             case 8:
                 btn8.setBackground(Color.red);
                 panelbtn8.setBackground(new Color(163, 10, 11));
                 panelcbtn8.setBackground(new Color(220, 10, 11));
                 btn8.setText("Faltan \n" + dias);
                 break;
-
             case 9:
                 btn9.setBackground(Color.red);
                 panelbtn9.setBackground(new Color(163, 10, 11));
                 panelcbtn9.setBackground(new Color(220, 10, 11));
                 btn9.setText("Faltan \n" + dias);
                 break;
-
             case 10:
                 btn10.setBackground(Color.red);
                 panelbtn10.setBackground(new Color(163, 10, 11));
                 panelcbtn10.setBackground(new Color(220, 10, 11));
                 btn10.setText("Faltan \n" + dias);
                 break;
-
             default:
                 throw new AssertionError();
         }
     }
 
     public void CuatoVacio(int a) {
-
         switch (a) {
             case 1:
                 // btn1.setBackground(Color.GREEN);
@@ -2219,21 +2170,18 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 panelcbtn1.setBackground(new Color(6, 163, 8));
                 btn1.setText("Disponible");
                 break;
-
             case 2:
                 btn2.setBackground(Color.GREEN);
                 panelbtn2.setBackground(new Color(76, 131, 76));
                 panelcbtn2.setBackground(new Color(6, 163, 8));
                 btn2.setText("Disponible");
                 break;
-
             case 3:
                 btn3.setBackground(Color.GREEN);
                 panelbtn3.setBackground(new Color(76, 131, 76));
                 panelcbtn3.setBackground(new Color(6, 163, 8));
                 btn3.setText("Disponible");
                 break;
-
             case 4:
                 btn4.setBackground(Color.GREEN);
                 panelbtn5.setBackground(new Color(76, 131, 76));
@@ -2247,42 +2195,36 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 panelcbtn4.setBackground(new Color(6, 163, 8));
                 btn5.setText("Disponible");
                 break;
-
             case 6:
                 btn6.setBackground(Color.GREEN);
                 panelbtn6.setBackground(new Color(76, 131, 76));
                 panelcbtn6.setBackground(new Color(6, 163, 8));
                 btn6.setText("Disponible");
                 break;
-
             case 7:
                 btn7.setBackground(Color.GREEN);
                 panelbtn7.setBackground(new Color(76, 131, 76));
                 panelcbtn7.setBackground(new Color(6, 163, 8));
                 btn7.setText("Disponible");
                 break;
-
             case 8:
                 btn8.setBackground(Color.GREEN);
                 panelbtn8.setBackground(new Color(76, 131, 76));
                 panelcbtn8.setBackground(new Color(6, 163, 8));
                 btn8.setText("Disponible");
                 break;
-
             case 9:
                 btn9.setBackground(Color.GREEN);
                 panelbtn9.setBackground(new Color(76, 131, 76));
                 panelcbtn9.setBackground(new Color(6, 163, 8));
                 btn9.setText("Disponible");
                 break;
-
             case 10:
                 btn10.setBackground(Color.GREEN);
                 panelbtn10.setBackground(new Color(76, 131, 76));
                 panelcbtn10.setBackground(new Color(6, 163, 8));
                 btn10.setText("Disponible");
                 break;
-
             default:
                 throw new AssertionError();
         }
@@ -2291,47 +2233,35 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     public void validarCuartos() {
         try {
             consultarRenta();
-
             int indice = 1;
             System.out.println("Numero de fila " + TablaContrato.getRowCount());
             System.out.println("Fecha fin " + String.valueOf(TablaContrato.getValueAt(0, 2)));
             System.out.println("Fecha fin " + String.valueOf(TablaContrato.getValueAt(0, 3)));
-
             for (int i = 0; i < TablaContrato.getRowCount(); i++) {
-
                 for (int j = indice; j <= 10; j++) {
-
                     if (String.valueOf(TablaContrato.getValueAt(i, 0)).equals("" + j)) {
-
                         //  System.out.println("Estoy en if de los cuartos");
                         CalcularFehca(String.valueOf(String.valueOf(TablaContrato.getValueAt(i, 3))));
-
                         CuatoOcupado(j);
                         System.out.println("Valor de j en if  ROJO " + j);
                         indice = j + 1;
-
                         if (i < TablaContrato.getRowCount() - 1) {
                             break;
                         } else {
-
                         }
                     } else {
                         CuatoVacio(j);
                         System.out.println("Valor de j en else VERDE" + j);
                     }
-
                 }
-
             }
-
         } catch (Exception ex) {
             System.out.println("Error " + ex);
             java.util.logging.Logger.getLogger(Alquiler.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
-    
-    public void limpiarTablausuarios(){
-        
+
+    public void limpiarTablausuarios() {
         txtIdUsuario.setText("");
         txtRol.setText("");
         txtNombre.setText("");
@@ -2344,53 +2274,28 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     private void BtnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarActionPerformed
         try {
-            String usuario=txtLoginUsuario.getText();
-            String contrasena=String.valueOf(txtLoginPass.getPassword());
-//          
-            String query="SELECT * FROM usuario WHERE usuario='"+usuario+"' and contrasena='"+contrasena+"'";
-            Statement st=m.conexion().createStatement();
-            ResultSet rs=st.executeQuery(query);
-
-            if(rs.next()){
+            String usuario = txtLoginUsuario.getText();
+            String contrasena = String.valueOf(txtLoginPass.getPassword());
+            String query = "SELECT * FROM usuario WHERE usuario='" + usuario + "' and contrasena='" + contrasena + "'";
+            Statement st = m.conexion().createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
                 JOptionPane.showMessageDialog(null, "Bienvenido");
-                
-                  Alquilerdepartamento.setBounds(700, 550, 1000, 650);
-                  Alquilerdepartamento.setLocationRelativeTo(null);
-                  Alquilerdepartamento.setModal(true);
-                  Alquilerdepartamento.setVisible(true);
-               
-            }else{
-                JOptionPane.showMessageDialog(this,"usuario o contraseña incorrecta");
-            }    
+                Alquilerdepartamento.setBounds(700, 550, 1000, 650);
+                Alquilerdepartamento.setLocationRelativeTo(null);
+                Alquilerdepartamento.setModal(true);
+                Alquilerdepartamento.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "usuario o contraseña incorrecta");
+            }
         } catch (Exception e) {
-            System.err.println("Error ..."+e);
+            System.err.println("Error ..." + e);
         }
-         //validarCuartos();
-
-//// Validar usuario y contraseña
-//        //Codigo para sacar la diferencia entre dos fechas
-//        String usuario = "juan";
-//        String contraseña = "123";
-//        if (usuario.equals(usuario) && contraseña.equals(contraseña)) {
-//
-//            Habitaciones();
-//            JOptionPane.showMessageDialog(null, "Bienvenido");
-//            Alquilerdepartamento.setBounds(700, 550, 1000, 650);
-//            Alquilerdepartamento.setLocationRelativeTo(null);
-//            Alquilerdepartamento.setModal(true);
-//            Alquilerdepartamento.setVisible(true);
-//
-//        } else {
-//            JOptionPane.showMessageDialog(null, "usuario o contraseña incorrecta");
-//
-//        }
-
     }//GEN-LAST:event_BtnIniciarActionPerformed
 
     /*Crear metodo para consultar las rententas actuales*/
     private void limpiaTabla(DefaultTableModel mod) {
         int a = mod.getRowCount();
-
         while (a != 0) { // Ciclo para Borrar la Tabla 1
             if (a != 0) {
                 mod.removeRow(0);
@@ -2403,18 +2308,15 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         limpiaTabla(modelo1);
         Object[] ob = new Object[4];
         try {
-
             String jdbcUrl = "jdbc:postgresql://localhost/" + bd;
             String SQL = "Select  idcuartos,nombre,fechainicio,fechafin from " + TablaRenta + " WHERE fechafin >= ? ORDER BY idcuartos ASC";
             Connection con2 = DriverManager.getConnection(jdbcUrl, "postgres", "milo");
             PreparedStatement statement = con2.prepareStatement(SQL);
             LocalDate fechaActual = LocalDate.now();
             statement.setObject(1, fechaActual);
-
             System.out.println("Estoy antes de entrar en resultset");
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-
                     ob[0] = resultSet.getObject("idcuartos");
                     ob[1] = resultSet.getObject("nombre");
                     ob[2] = resultSet.getObject("fechainicio");
@@ -2428,13 +2330,11 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             System.out.println(e.getMessage());
         }
         TablaContrato.setModel(modelo1);
-
     }
 
     //Metodo para habilitar los colores de los botnones(Habitaciones) Disponibles
     //Este metodo estará dentro del boton loguear.
     public void Habitaciones() {
-
         //Primero consultar la base de datos para saber cuantas habitaciones estan disponibles 
         int NumHabitaciones = 10;
         int FehcaInicio = 0;
@@ -2442,33 +2342,26 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         int fecha = 0;
         for (int i = 0; i < NumHabitaciones; i++) {
             //Verifacamos que habitaciones estan disponibles. Fecha inicoo y fecha fin Diferencia =0
-
             if (i % 2 == 10) {
-
                 //Color verde a las habitaciones disponibles
                 /* btn2.setBackground(Color.red);
-            
             btn4.setBackground(Color.red);
             btn6.setBackground(Color.red);
             btn8.setBackground(Color.red);*/
             } else {
                 //COlor rojo a las habitaciones ocupadas
                 //Agregar el nombre del inquilino que ocupa esa habitacion
-
                 /* btn1.setBackground(Color.red);
-            
             btn3.setBackground(Color.red);
             btn5.setBackground(Color.red);
             btn7.setBackground(Color.red);*/
             }
-
         }
-
     }
 
     void limpiar() {
-        //txtaDescripcionGastos.setText("");
-        //txtMontoGastos.setText("");
+        txtaDescripcionGastos.setText("");
+        txtMontoGastos.setText("");
     }
 
     public void guardar() {
@@ -2485,7 +2378,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }*/
-
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
             Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
@@ -2508,7 +2400,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             String consulta = "select * from gasto";
             rs = s.executeQuery(consulta);
             while (rs.next()) {
-
                 //Se crea un arreglo de tipo objeto
                 Object[] objetos = new Object[3];
                 //Se le asignan los datos a la respectiva columna de la tabla
@@ -2572,13 +2463,9 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         Habitaciones.setLocationRelativeTo(null);
         Habitaciones.setModal(true);
         Habitaciones.setVisible(true);
-
-
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-        // Boton 2 i nformacion
-
         if (btn2.getText().equals("Disponible")) {
             Contratos.setBounds(700, 550, 650, 600);
             Contratos.setLocationRelativeTo(null);
@@ -2594,13 +2481,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             Testigo.setText("Juan Manuel");
             DatosPers.setVisible(true);
         }
-
-
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // Agregar Renta de cuartos
-
         SimpleDateFormat fechai = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat fechaf = new SimpleDateFormat("yyyy-MM-dd");
         String data = fechai.format(FechaInicio.getDate());
@@ -2609,8 +2493,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         m.insertaRenta(bd, TablaRenta, jTextField9.getText(), jTextField11.getText(), data, data1);
         limpiaTabla(modelo1);
         consultarRenta();
-
-
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
@@ -2626,7 +2508,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             DatosPers.setModal(true);
             DatosPers.setVisible(true);
         }
-
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
@@ -2642,7 +2523,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             DatosPers.setModal(true);
             DatosPers.setVisible(true);
         }
-
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
@@ -2658,7 +2538,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             DatosPers.setModal(true);
             DatosPers.setVisible(true);
         }
-
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
@@ -2674,7 +2553,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             DatosPers.setModal(true);
             DatosPers.setVisible(true);
         }
-
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
@@ -2690,7 +2568,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             DatosPers.setModal(true);
             DatosPers.setVisible(true);
         }
-
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
@@ -2706,7 +2583,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             DatosPers.setModal(true);
             DatosPers.setVisible(true);
         }
-
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
@@ -2722,7 +2598,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             DatosPers.setModal(true);
             DatosPers.setVisible(true);
         }
-
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btn10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10ActionPerformed
@@ -2738,30 +2613,25 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             DatosPers.setModal(true);
             DatosPers.setVisible(true);
         }
-
     }//GEN-LAST:event_btn10ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-
         if (TablaContrato.getSelectedRow() != -1) {
             int b = (int) TablaContrato.getValueAt(TablaContrato.getSelectedRow(), 0);
             m.eliminarCliente(bd, TablaRenta, b);
             limpiaTabla(modelo1);
             consultarRenta();
-
         } else {
 
             JOptionPane.showMessageDialog(null, "error no hay fila seleccionada");
         }
-
-
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void TablaContratoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaContratoMouseClicked
         // TODO add your handling code here:
         /*
-          int seleccionar = tablaInventario.rowAtPoint(evt.getPoint());
+        int seleccionar = tablaInventario.rowAtPoint(evt.getPoint());
         txtMarcam.setText(String.valueOf(tablaInventario.getValueAt(seleccionar,1)));
         txtRamm.setText(String.valueOf(tablaInventario.getValueAt(seleccionar,2)));
         txtMemoriam.setText(String.valueOf(tablaInventario.getValueAt(seleccionar,3))); 
@@ -2770,8 +2640,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         txtcPreciovm.setText(String.valueOf(tablaInventario.getValueAt(seleccionar,6))); 
         txtPreciocm.setText(String.valueOf(tablaInventario.getValueAt(seleccionar,7)));
         txtcantm.setText(String.valueOf(tablaInventario.getValueAt(seleccionar,8)));*/
-
-
     }//GEN-LAST:event_TablaContratoMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -2779,14 +2647,11 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
         //Este evento es cuando le damos en cerra la pestalla
-
     }//GEN-LAST:event_formWindowClosing
 
     private void ContratosWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_ContratosWindowClosing
         // VENTANA DE CERRRA DE CONTRATOS
-
         validarCuartos();
     }//GEN-LAST:event_ContratosWindowClosing
 
@@ -2796,7 +2661,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     private void loginpanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginpanelMouseEntered
         // Accion para el panel  de logiarse
-
         loginpanel.setBackground(new Color(0, 156, 223));
     }//GEN-LAST:event_loginpanelMouseEntered
 
@@ -2825,7 +2689,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             txtLoginPass.setText("hola");
             txtLoginPass.setForeground(Color.gray);
         }
-
     }//GEN-LAST:event_txtLoginUsuarioMousePressed
 
     private void txtLoginPassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLoginPassMousePressed
@@ -2861,7 +2724,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         guardar();
         limpiar();
         mostrar();
-
     }//GEN-LAST:event_btnGuardarGastosActionPerformed
 
     private void miGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGastosActionPerformed
@@ -2887,20 +2749,17 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_txtRolActionPerformed
 
     private void btnGuardarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEActionPerformed
-
-         try {
+        try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
             Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             String insertar = "insert into usuario(idrol, nombre , telefono, usuario, contrasena, correo)"
-                    + "values('" + txtRol.getText() + "','" + txtNombre1.getText() + "','" + txtTelefono.getText() + "','" + txtUsuario.getText() + "','" + txtContrasena.getText() + "','" + txtCorreo.getText()+ "')";
+                    + "values('" + txtRol.getText() + "','" + txtNombre1.getText() + "','" + txtTelefono.getText() + "','" + txtUsuario.getText() + "','" + txtContrasena.getText() + "','" + txtCorreo.getText() + "')";
             s.executeUpdate(insertar);
             con.close();
         } catch (Exception ex) {
             System.out.println(ex);
         }
-         
-       
     }//GEN-LAST:event_btnGuardarEActionPerformed
 
     private void btnActualizarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarEActionPerformed
@@ -2932,20 +2791,17 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_btnActualizarEActionPerformed
 
     private void tablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosMouseClicked
-
-        int fila=this.tablaUsuarios.getSelectedRow();
-
+        int fila = this.tablaUsuarios.getSelectedRow();
         this.txtRol.setText(this.tablaUsuarios.getValueAt(fila, 0).toString());
         this.txtNombre.setText(this.tablaUsuarios.getValueAt(fila, 1).toString());
         this.txtTelefono.setText(this.tablaUsuarios.getValueAt(fila, 2).toString());
         this.txtUsuario.setText(this.tablaUsuarios.getValueAt(fila, 3).toString());
         this.txtContrasena.setText(this.tablaUsuarios.getValueAt(fila, 4).toString());
         this.txtCorreo.setText(this.tablaUsuarios.getValueAt(fila, 5).toString());
-
     }//GEN-LAST:event_tablaUsuariosMouseClicked
 
     private void ItemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemUsuariosActionPerformed
-        Usuarios.setBounds(0,0,600,500);
+        Usuarios.setBounds(0, 0, 600, 500);
         Usuarios.setModal(true);
         Usuarios.setVisible(true);
     }//GEN-LAST:event_ItemUsuariosActionPerformed
@@ -2954,41 +2810,37 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginPassActionPerformed
 
-     public void guardarpagos(){
-    
-        
-        try{
-        Class.forName("org.postgresql.Driver");//Registrando el driver
-                   Connection con=DriverManager.getConnection("jdbc:postgresql://"+host+"/"+bd,user,password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
-                   Statement s = con.createStatement();
-                   String insertar= "insert into pago(idrenta, nombre , fechapago, monto, comprobantepago)"
-                           + "values('" + txtIdRenta.getText() + "','" + txtNombre.getText() + "','" + FechaPago.getDate()+ "','" + txtMonto.getText()+ "','" + txtComprobantePago.getText() + "')";
-                   s.executeUpdate(insertar);
-        con.close();
-        }catch(Exception ex){
+    public void guardarpagos() {
+        try {
+            Class.forName("org.postgresql.Driver");//Registrando el driver
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + bd, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Statement s = con.createStatement();
+            String insertar = "insert into pago(idrenta, nombre , fechapago, monto, comprobantepago)"
+                    + "values('" + txtIdRenta.getText() + "','" + txtNombre.getText() + "','" + FechaPago.getDate() + "','" + txtMonto.getText() + "','" + txtComprobantePago.getText() + "')";
+            s.executeUpdate(insertar);
+            con.close();
+        } catch (Exception ex) {
             System.out.println(ex);
         }
-     
-     }
-     
-      public void mostrarpagos() {
+    }
+
+    public void mostrarpagos() {
         try {
-             Class.forName("org.postgresql.Driver");//Registrando el driver
-                   Connection con=DriverManager.getConnection("jdbc:postgresql://"+host+"/"+bd,user,password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
-                   Statement s = con.createStatement();
+            Class.forName("org.postgresql.Driver");//Registrando el driver
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + bd, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Statement s = con.createStatement();
             ResultSet rs;
             String consulta = "select * from pago";
             rs = s.executeQuery(consulta);
             while (rs.next()) {
-
                 //Se crea un arreglo de tipo objeto
                 Object[] objetos = new Object[5];
                 //Se le asignan los datos a la respectiva columna de la tabla
                 objetos[0] = rs.getString(2);
                 objetos[1] = rs.getString(3);
                 objetos[2] = rs.getString(4);
-                objetos[3]=rs.getString(5);
-                objetos[4]=rs.getString(6);
+                objetos[3] = rs.getString(5);
+                objetos[4] = rs.getString(6);
                 //objetos[5]=rs.getString(6);
 
                 //Añade las filas que se vayan generando
@@ -3011,11 +2863,11 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         }
         pagos_tabla.setModel(modelo3);
     }
-          public void horaActual() {
+
+    public void horaActual() {
         Calendar ca = new GregorianCalendar();
         Date da = new Date();
         ca.setTime(da);
-
         hora = ca.get(Calendar.HOUR_OF_DAY) > 9 ? "" + ca.get(Calendar.HOUR_OF_DAY) : "0" + ca.get(Calendar.HOUR_OF_DAY);
         minutos = ca.get(Calendar.MINUTE) > 9 ? "" + ca.get(Calendar.MINUTE) : "0" + ca.get(Calendar.MINUTE);
         segundos = ca.get(Calendar.SECOND) > 9 ? "" + ca.get(Calendar.SECOND) : "0" + ca.get(Calendar.SECOND);
