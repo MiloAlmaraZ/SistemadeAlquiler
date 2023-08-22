@@ -1997,10 +1997,10 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jScrollPane4" alignment="0" pref="186" max="32767" attributes="0"/>
-                                          <Component id="dtGastos" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="dtGastos" alignment="0" pref="186" max="32767" attributes="0"/>
                                           <Component id="txtMontoGastos" alignment="0" max="32767" attributes="0"/>
                                           <Component id="txtIdUsuarioGasto" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jcbDescripcionGastos" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -2028,8 +2028,8 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblDescripcionGastos" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jScrollPane4" min="-2" pref="68" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jcbDescripcionGastos" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblMontoGastos" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtMontoGastos" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -2085,21 +2085,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarGastosActionPerformed"/>
               </Events>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane4">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTextArea" name="txtaDescripcionGastos">
-                  <Properties>
-                    <Property name="columns" type="int" value="20"/>
-                    <Property name="rows" type="int" value="5"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
             <Component class="com.toedter.calendar.JDateChooser" name="dtGastos">
             </Component>
             <Component class="javax.swing.JLabel" name="lblIdUsuarioGasto">
@@ -2108,6 +2093,19 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtIdUsuarioGasto">
+            </Component>
+            <Component class="javax.swing.JComboBox" name="jcbDescripcionGastos">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbDescripcionGastosActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

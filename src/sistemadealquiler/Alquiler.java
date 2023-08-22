@@ -52,6 +52,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     String user = "potsgres";
     String passErik = "rajkire16";
     //String password = "rajkire16";
+    
 
     public Alquiler() {
         initComponents();
@@ -65,6 +66,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         txtIdUsuario.setEnabled(false);
         limpiarTablausuarios();
         mostrarTablaUsuarios("");
+        
+        m.RellenarComboBox(BD, TablaGastos, "Descripcion", jcbDescripcionGastos);
     }
 
     public void mostrarTablaUsuarios(String valor) {
@@ -239,11 +242,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         txtMontoGastos = new javax.swing.JTextField();
         lblTituloGastos = new javax.swing.JLabel();
         btnGuardarGastos = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        txtaDescripcionGastos = new javax.swing.JTextArea();
         dtGastos = new com.toedter.calendar.JDateChooser();
         lblIdUsuarioGasto = new javax.swing.JLabel();
         txtIdUsuarioGasto = new javax.swing.JTextField();
+        jcbDescripcionGastos = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         TblGastos = new javax.swing.JTable();
         Pagos = new javax.swing.JDialog();
@@ -1499,11 +1501,13 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        txtaDescripcionGastos.setColumns(20);
-        txtaDescripcionGastos.setRows(5);
-        jScrollPane4.setViewportView(txtaDescripcionGastos);
-
         lblIdUsuarioGasto.setText("Id de Usuario");
+
+        jcbDescripcionGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbDescripcionGastosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlGastosLayout = new javax.swing.GroupLayout(pnlGastos);
         pnlGastos.setLayout(pnlGastosLayout);
@@ -1526,10 +1530,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                             .addGroup(pnlGastosLayout.createSequentialGroup()
                                 .addGap(36, 36, 36)
                                 .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                    .addComponent(dtGastos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dtGastos, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                                     .addComponent(txtMontoGastos)
-                                    .addComponent(txtIdUsuarioGasto)))))
+                                    .addComponent(txtIdUsuarioGasto)
+                                    .addComponent(jcbDescripcionGastos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(pnlGastosLayout.createSequentialGroup()
                         .addGap(141, 141, 141)
                         .addComponent(btnGuardarGastos)))
@@ -1548,8 +1552,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDescripcionGastos)
                     .addGroup(pnlGastosLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jcbDescripcionGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
                         .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblMontoGastos)
                             .addComponent(txtMontoGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -2273,24 +2277,29 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
 
     private void BtnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarActionPerformed
-        try {
-            String usuario = txtLoginUsuario.getText();
-            String contrasena = String.valueOf(txtLoginPass.getPassword());
-            String query = "SELECT * FROM usuario WHERE usuario='" + usuario + "' and contrasena='" + contrasena + "'";
-            Statement st = m.conexion().createStatement();
-            ResultSet rs = st.executeQuery(query);
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Bienvenido");
-                Alquilerdepartamento.setBounds(700, 550, 1000, 650);
-                Alquilerdepartamento.setLocationRelativeTo(null);
-                Alquilerdepartamento.setModal(true);
-                Alquilerdepartamento.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "usuario o contraseña incorrecta");
-            }
-        } catch (Exception e) {
-            System.err.println("Error ..." + e);
-        }
+        JOptionPane.showMessageDialog(null, "Bienvenido");
+        Alquilerdepartamento.setBounds(700, 550, 1000, 650);
+        Alquilerdepartamento.setLocationRelativeTo(null);
+        Alquilerdepartamento.setModal(true);
+        Alquilerdepartamento.setVisible(true);
+//        try {
+//            String usuario = txtLoginUsuario.getText();
+//            String contrasena = String.valueOf(txtLoginPass.getPassword());
+//            String query = "SELECT * FROM usuario WHERE usuario='" + usuario + "' and contrasena='" + contrasena + "'";
+//            Statement st = m.conexion().createStatement();
+//            ResultSet rs = st.executeQuery(query);
+//            if (rs.next()) {
+//                JOptionPane.showMessageDialog(null, "Bienvenido");
+//                Alquilerdepartamento.setBounds(700, 550, 1000, 650);
+//                Alquilerdepartamento.setLocationRelativeTo(null);
+//                Alquilerdepartamento.setModal(true);
+//                Alquilerdepartamento.setVisible(true);
+//            } else {
+//                JOptionPane.showMessageDialog(this, "usuario o contraseña incorrecta");
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Error ..." + e);
+//        }
     }//GEN-LAST:event_BtnIniciarActionPerformed
 
     /*Crear metodo para consultar las rententas actuales*/
@@ -2360,7 +2369,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }
 
     void limpiar() {
-        txtaDescripcionGastos.setText("");
         txtMontoGastos.setText("");
     }
 
@@ -2383,7 +2391,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             String insertar = "insert into gasto(idusuario, descripcion , monto, fechagasto)"
-                    + "values('" + txtIdUsuarioGasto.getText() + "','" + txtaDescripcionGastos.getText() + "','" + txtMontoGastos.getText() + "','" + dtGastos.getDate() + "')";
+                    + "values('" + txtIdUsuarioGasto.getText() + "','" + jcbDescripcionGastos.getToolTipText() + "','" + txtMontoGastos.getText() + "','" + dtGastos.getDate() + "')";
             s.executeUpdate(insertar);
             con.close();
         } catch (Exception ex) {
@@ -2810,6 +2818,11 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginPassActionPerformed
 
+    private void jcbDescripcionGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbDescripcionGastosActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jcbDescripcionGastosActionPerformed
+
     public void guardarpagos() {
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
@@ -3099,7 +3112,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
@@ -3114,6 +3126,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JComboBox<String> jcbDescripcionGastos;
     private javax.swing.JLabel lblDescripcionGastos;
     private javax.swing.JLabel lblFechaGastos;
     private javax.swing.JLabel lblIdUsuarioGasto;
@@ -3171,6 +3184,5 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txtRol;
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtUsuario;
-    private javax.swing.JTextArea txtaDescripcionGastos;
     // End of variables declaration//GEN-END:variables
 }

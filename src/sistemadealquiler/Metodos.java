@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class Metodos {
@@ -179,4 +180,23 @@ public class Metodos {
                 JOptionPane.showMessageDialog(null, ex);
             }
         }
+
+
+    public void RellenarComboBox(String bd, String tabla, String valor, JComboBox combo){
+        String sql = "select * from gasto";
+        try{
+            Statement st = conectaBase(bd).createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                combo.addItem(rs.getString(valor));
+            }
+            
+        } catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        
+        
     }
+
+
+}
