@@ -12,10 +12,10 @@ import javax.swing.JOptionPane;
 
 public class Metodos {
 
-    String pass = "rajkire16";
+    String pass = "heber123.";
     String user = "postgres";
     String host = "localhost";
-    String BD = "renta";
+    String BD = "Renta1";
     Connection con1 = null;
     String nom;
 

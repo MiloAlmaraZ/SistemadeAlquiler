@@ -48,9 +48,17 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     long dias;
     String TablaGastos = "gasto";
     String host = "localhost";
-    String BD = "renta";
-    String user = "potsgres";
-    String passErik = "rajkire16";
+    String BD = "Renta1";
+    String user = "postgres";
+    String passErik = "heber123.";
+    String password = "heber123.";
+        int bR1;
+    int bC1;
+    int bA1;
+    int bP1;
+    int bG1;
+    int bU1;
+    int bH1;
     //String password = "rajkire16";
     
 
@@ -288,6 +296,35 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         btnNuevoE = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
+        Rol = new javax.swing.JDialog();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel40 = new javax.swing.JLabel();
+        txtNombreRol = new javax.swing.JTextField();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jLabel43 = new javax.swing.JLabel();
+        jRadioButton5 = new javax.swing.JRadioButton();
+        jRadioButton6 = new javax.swing.JRadioButton();
+        jLabel44 = new javax.swing.JLabel();
+        jRadioButton7 = new javax.swing.JRadioButton();
+        jRadioButton8 = new javax.swing.JRadioButton();
+        jLabel45 = new javax.swing.JLabel();
+        jRadioButton9 = new javax.swing.JRadioButton();
+        jRadioButton10 = new javax.swing.JRadioButton();
+        jLabel46 = new javax.swing.JLabel();
+        jRadioButton11 = new javax.swing.JRadioButton();
+        jRadioButton12 = new javax.swing.JRadioButton();
+        jLabel47 = new javax.swing.JLabel();
+        jRadioButton13 = new javax.swing.JRadioButton();
+        jRadioButton14 = new javax.swing.JRadioButton();
+        jLabel48 = new javax.swing.JLabel();
+        btnGuardarRol = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -853,6 +890,11 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         mbUsuarios.add(ItemUsuarios);
 
         ItemRol.setText("Roles");
+        ItemRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ItemRolActionPerformed(evt);
+            }
+        });
         mbUsuarios.add(ItemRol);
 
         jMenuBar1.add(mbUsuarios);
@@ -1908,6 +1950,201 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jLabel38.setText("Crear un rol");
+
+        jLabel39.setText("Nombre del rol:");
+
+        jRadioButton1.setText("Permitir");
+
+        jRadioButton2.setText("Denegar");
+
+        jLabel40.setText("Roles");
+
+        jLabel41.setText("Páginas:");
+
+        jLabel42.setText("Accesos:");
+
+        jRadioButton3.setText("Permitir");
+
+        jRadioButton4.setText("Denegar");
+
+        jLabel43.setText("Contratos");
+
+        jRadioButton5.setText("Permitir");
+
+        jRadioButton6.setText("Denegar");
+
+        jLabel44.setText("Pagos");
+
+        jRadioButton7.setText("Permitir");
+
+        jRadioButton8.setText("Denegar");
+
+        jLabel45.setText("Arrendadores");
+
+        jRadioButton9.setText("Permitir");
+
+        jRadioButton10.setText("Denegar");
+
+        jLabel46.setText("Gastos");
+
+        jRadioButton11.setText("Permitir");
+
+        jRadioButton12.setText("Denegar");
+
+        jLabel47.setText("Habitaciones");
+
+        jRadioButton13.setText("Permitir");
+
+        jRadioButton14.setText("Denegar");
+
+        jLabel48.setText("Usuarios");
+
+        btnGuardarRol.setText("Guardar");
+        btnGuardarRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarRolActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel17Layout.createSequentialGroup()
+                                    .addComponent(jLabel39)
+                                    .addGap(29, 29, 29)
+                                    .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel17Layout.createSequentialGroup()
+                                    .addGap(12, 12, 12)
+                                    .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                            .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel45)
+                                                .addComponent(jLabel44)
+                                                .addComponent(jLabel43)
+                                                .addComponent(jLabel40)
+                                                .addComponent(jLabel48)
+                                                .addComponent(jLabel47)
+                                                .addComponent(jLabel46))
+                                            .addGap(120, 120, 120)
+                                            .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel17Layout.createSequentialGroup()
+                                                    .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jRadioButton1)
+                                                        .addComponent(jRadioButton3)
+                                                        .addComponent(jRadioButton5)
+                                                        .addComponent(jRadioButton7))
+                                                    .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(jPanel17Layout.createSequentialGroup()
+                                                            .addGap(98, 98, 98)
+                                                            .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                .addComponent(jRadioButton4)
+                                                                .addComponent(jRadioButton2)
+                                                                .addComponent(jRadioButton8)))
+                                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                            .addComponent(jRadioButton6))))
+                                                .addGroup(jPanel17Layout.createSequentialGroup()
+                                                    .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jRadioButton9)
+                                                        .addComponent(jRadioButton11)
+                                                        .addComponent(jRadioButton13))
+                                                    .addGap(98, 98, 98)
+                                                    .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addComponent(jRadioButton10)
+                                                        .addComponent(jRadioButton14)
+                                                        .addComponent(jRadioButton12)))))
+                                        .addComponent(jLabel41)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
+                                    .addComponent(btnGuardarRol)
+                                    .addGap(165, 165, 165)))
+                            .addGroup(jPanel17Layout.createSequentialGroup()
+                                .addComponent(jLabel42)
+                                .addGap(97, 97, 97))))
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addGap(211, 211, 211)
+                        .addComponent(jLabel38)))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel38)
+                .addGap(35, 35, 35)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel39)
+                    .addComponent(txtNombreRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel41))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addComponent(jRadioButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton6))
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jLabel40))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton3)
+                            .addComponent(jLabel43))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton7)
+                            .addComponent(jLabel45))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton5)
+                            .addComponent(jLabel44))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton9)
+                    .addComponent(jLabel46)
+                    .addComponent(jRadioButton10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton13)
+                    .addComponent(jLabel48)
+                    .addComponent(jRadioButton14))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton11)
+                    .addComponent(jLabel47)
+                    .addComponent(jRadioButton12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(btnGuardarRol)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout RolLayout = new javax.swing.GroupLayout(Rol.getContentPane());
+        Rol.getContentPane().setLayout(RolLayout);
+        RolLayout.setHorizontalGroup(
+            RolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        RolLayout.setVerticalGroup(
+            RolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RolLayout.createSequentialGroup()
+                .addComponent(jPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -2277,11 +2514,58 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
 
     private void BtnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarActionPerformed
-        JOptionPane.showMessageDialog(null, "Bienvenido");
-        Alquilerdepartamento.setBounds(700, 550, 1000, 650);
-        Alquilerdepartamento.setLocationRelativeTo(null);
-        Alquilerdepartamento.setModal(true);
-        Alquilerdepartamento.setVisible(true);
+       try {
+            String usuario=txtLoginUsuario.getText();
+            String contrasena=String.valueOf(txtLoginPass.getPassword());
+//          
+            String query="SELECT usuario.usuario, usuario.contrasena, rol.rol, rol.prol, rol.pcontratos,rol.parrendadores, rol.ppagos, rol.pgastos, rol.pusuarios, rol.phabitaciones FROM usuario JOIN rol ON usuario.idrol = rol.idrol WHERE usuario='"+usuario+"' and contrasena='"+contrasena+"'";
+            Statement st=m.conexion().createStatement();
+            ResultSet rs=st.executeQuery(query);
+
+           
+        
+            if(rs.next()){
+                 int p1 = rs.getInt("prol");
+            int p2 = rs.getInt("pcontratos");
+            int p3 = rs.getInt("parrendadores");
+            int p4 = rs.getInt("ppagos");
+            int p5 = rs.getInt("pgastos");
+            int p6 = rs.getInt("pusuarios");
+            int p7 = rs.getInt("phabitaciones");
+                if (p1==0){
+                ItemRol.setVisible(false);
+                } 
+                    if (p2==0){
+                jMenuItem2.setVisible(false);
+                } 
+                    if (p3==0){
+                jMenuItem1.setVisible(false);
+                } 
+                    if (p4==0){
+                miPagos.setVisible(false);
+                } 
+                    if (p5==0){
+                miGastos.setVisible(false);
+                } 
+                    if (p6==0){
+                ItemUsuarios.setVisible(false);
+                } 
+                    if (p7==0){
+                jMenuItem3.setVisible(false);
+                }
+                
+                  Alquilerdepartamento.setBounds(700, 550, 1000, 650);
+                  Alquilerdepartamento.setLocationRelativeTo(null);
+                  Alquilerdepartamento.setModal(true);
+                  Alquilerdepartamento.setVisible(true);
+                  
+               
+            }else{
+                JOptionPane.showMessageDialog(this,"usuario o contraseña incorrecta");
+            }    
+        } catch (Exception e) {
+            System.err.println("Error ..."+e);
+        }
 //        try {
 //            String usuario = txtLoginUsuario.getText();
 //            String contrasena = String.valueOf(txtLoginPass.getPassword());
@@ -2823,6 +3107,71 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         
     }//GEN-LAST:event_jcbDescripcionGastosActionPerformed
 
+    private void btnGuardarRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarRolActionPerformed
+        if(jRadioButton1.isSelected()){
+            bR1=1;
+        }else if(jRadioButton2.isSelected()){
+            bR1=0;
+        }
+
+        if(jRadioButton3.isSelected()){
+            bC1=1;
+        }else if(jRadioButton4.isSelected()){
+            bC1=0;
+        }
+
+        if(jRadioButton7.isSelected()){
+            bA1=1;
+        }else if(jRadioButton8.isSelected()){
+            bA1=0;
+        }
+
+        if(jRadioButton5.isSelected()){
+            bP1=1;
+        }else if(jRadioButton6.isSelected()){
+            bP1=0;
+        }
+        //aqui
+        if(jRadioButton9.isSelected()){
+            bG1=1;
+        }else if(jRadioButton10.isSelected()){
+            bG1=0;
+        }
+
+        if(jRadioButton13.isSelected()){
+            bU1=1;
+        }else if(jRadioButton14.isSelected()){
+            bU1=0;
+        }
+
+        if(jRadioButton11.isSelected()){
+            bH1=1;
+        }else if(jRadioButton12.isSelected()){
+            bH1=0;
+        }
+
+        JOptionPane.showConfirmDialog(null, "roles" +bR1 +"contratos" +bC1 +"arrendadores" +bA1 +"Pagos" +bP1 +"Gastos" +bG1 +"Usuarios" +bU1 +"Habitaciones" +bH1);
+
+        try {
+            Class.forName("org.postgresql.Driver");//Registrando el driver
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Statement s = con.createStatement();
+            String insertar = "insert into rol(rol, prol , pcontratos, parrendadores, ppagos, pgastos, pusuarios, phabitaciones)"
+            + "values('" + txtNombreRol.getText() + "','" + bR1 + "','" + bC1 + "','" + bA1 + "','" + bP1 + "','" + bG1 + "','" + bU1 + "','" + bH1 + "')";
+            s.executeUpdate(insertar);
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+    }//GEN-LAST:event_btnGuardarRolActionPerformed
+
+    private void ItemRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemRolActionPerformed
+        Rol.setBounds(0, 0, 600, 500);
+        Rol.setModal(true);
+        Rol.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_ItemRolActionPerformed
+
     public void guardarpagos() {
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
@@ -3011,6 +3360,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel NumTelefono;
     private javax.swing.JDialog Opciones;
     private javax.swing.JDialog Pagos;
+    private javax.swing.JDialog Rol;
     private javax.swing.JTable TablaContrato;
     private javax.swing.JTable TblGastos;
     private javax.swing.JLabel Testigo;
@@ -3030,6 +3380,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btnGuardarE;
     private javax.swing.JButton btnGuardarGastos;
     private javax.swing.JButton btnGuardarPago;
+    private javax.swing.JButton btnGuardarRol;
     private javax.swing.JButton btnNuevoE;
     private com.toedter.calendar.JDateChooser dtGastos;
     private javax.swing.JLabel hora2;
@@ -3078,7 +3429,18 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -3098,6 +3460,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel21;
@@ -3109,6 +3472,20 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton10;
+    private javax.swing.JRadioButton jRadioButton11;
+    private javax.swing.JRadioButton jRadioButton12;
+    private javax.swing.JRadioButton jRadioButton13;
+    private javax.swing.JRadioButton jRadioButton14;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JRadioButton jRadioButton5;
+    private javax.swing.JRadioButton jRadioButton6;
+    private javax.swing.JRadioButton jRadioButton7;
+    private javax.swing.JRadioButton jRadioButton8;
+    private javax.swing.JRadioButton jRadioButton9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -3181,6 +3558,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txtMontoGastos;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombre1;
+    private javax.swing.JTextField txtNombreRol;
     private javax.swing.JTextField txtRol;
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtUsuario;
