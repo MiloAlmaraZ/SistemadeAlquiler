@@ -13,7 +13,7 @@ public class Conexion {
     public Connection conexion(){
         try {
                 //Class.forName("com.mysql.jdbc.Driver");            
-                cn = DriverManager.getConnection("jdbc:postgresql://localhost/renta","postgres","fernando");           
+                cn = DriverManager.getConnection("jdbc:postgresql://localhost/renta","postgres","rajkire16");           
                 System.out.println("conectado");  
         } catch (Exception e) {
             System.err.println(e.getMessage());

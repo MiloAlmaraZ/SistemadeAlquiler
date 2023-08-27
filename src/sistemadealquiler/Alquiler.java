@@ -42,24 +42,21 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     static String a = "DEPARTAMENTOS LOGUEN                                            DEPARTAMENTOS LOGUEN                 ";
     static String a2 = "                                                                                                       ";
     String hora, minutos, segundos;
-    //String bd = "Renta1";
     String TablaRenta = "renta";
     int bandera;
     long dias;
     String TablaGastos = "gasto";
     String host = "localhost";
-    String BD = "Renta1";
+    String BD = "Renta";
     String user = "postgres";
-    String passErik = "heber123.";
-    String password = "heber123.";
-        int bR1;
+    String password = "rajkire16";
+    int bR1;
     int bC1;
     int bA1;
     int bP1;
     int bG1;
     int bU1;
     int bH1;
-    //String password = "rajkire16";
     
 
     public Alquiler() {
@@ -74,7 +71,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         txtIdUsuario.setEnabled(false);
         limpiarTablausuarios();
         mostrarTablaUsuarios("");
-        
         m.RellenarComboBox(BD, TablaGastos, "Descripcion", jcbDescripcionGastos);
     }
 
@@ -1519,9 +1515,9 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
-        pnlGastos.setBackground(new java.awt.Color(153, 255, 255));
+        pnlGastos.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblDescripcionGastos.setText("Descripción:");
+        lblDescripcionGastos.setText("Categoria:");
 
         lblMontoGastos.setText("Monto:");
 
@@ -1561,10 +1557,11 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                         .addGap(32, 32, 32)
                         .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblDescripcionGastos)
-                            .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lblFechaGastos)
-                                .addComponent(lblMontoGastos))
-                            .addComponent(lblIdUsuarioGasto))
+                            .addComponent(lblIdUsuarioGasto)
+                            .addGroup(pnlGastosLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(lblFechaGastos))
+                            .addComponent(lblMontoGastos))
                         .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlGastosLayout.createSequentialGroup()
                                 .addGap(37, 37, 37)
@@ -1579,31 +1576,36 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                     .addGroup(pnlGastosLayout.createSequentialGroup()
                         .addGap(141, 141, 141)
                         .addComponent(btnGuardarGastos)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlGastosLayout.setVerticalGroup(
             pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlGastosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTituloGastos, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIdUsuarioGasto)
-                    .addComponent(txtIdUsuarioGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDescripcionGastos)
                     .addGroup(pnlGastosLayout.createSequentialGroup()
-                        .addComponent(jcbDescripcionGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblMontoGastos)
-                            .addComponent(txtMontoGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFechaGastos)
-                            .addComponent(dtGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                            .addGroup(pnlGastosLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblIdUsuarioGasto)
+                                    .addComponent(txtIdUsuarioGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                                .addComponent(jcbDescripcionGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlGastosLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblDescripcionGastos)))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtMontoGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMontoGastos))
+                        .addGap(18, 18, 18)
+                        .addComponent(dtGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlGastosLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblFechaGastos)))
+                .addGap(63, 63, 63)
                 .addComponent(btnGuardarGastos)
                 .addGap(38, 38, 38))
         );
@@ -1623,18 +1625,15 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         GastosLayout.setHorizontalGroup(
             GastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
-            .addGroup(GastosLayout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addComponent(pnlGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pnlGastos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         GastosLayout.setVerticalGroup(
             GastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(GastosLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(pnlGastos, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addGap(1, 1, 1)
+                .addComponent(pnlGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2516,16 +2515,13 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private void BtnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIniciarActionPerformed
        try {
             String usuario=txtLoginUsuario.getText();
-            String contrasena=String.valueOf(txtLoginPass.getPassword());
-//          
+            String contrasena=String.valueOf(txtLoginPass.getPassword());        
             String query="SELECT usuario.usuario, usuario.contrasena, rol.rol, rol.prol, rol.pcontratos,rol.parrendadores, rol.ppagos, rol.pgastos, rol.pusuarios, rol.phabitaciones FROM usuario JOIN rol ON usuario.idrol = rol.idrol WHERE usuario='"+usuario+"' and contrasena='"+contrasena+"'";
             Statement st=m.conexion().createStatement();
             ResultSet rs=st.executeQuery(query);
 
-           
-        
             if(rs.next()){
-                 int p1 = rs.getInt("prol");
+            int p1 = rs.getInt("prol");
             int p2 = rs.getInt("pcontratos");
             int p3 = rs.getInt("parrendadores");
             int p4 = rs.getInt("ppagos");
@@ -2553,13 +2549,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                     if (p7==0){
                 jMenuItem3.setVisible(false);
                 }
-                
-                  Alquilerdepartamento.setBounds(700, 550, 1000, 650);
-                  Alquilerdepartamento.setLocationRelativeTo(null);
-                  Alquilerdepartamento.setModal(true);
-                  Alquilerdepartamento.setVisible(true);
-                  
-               
+                Alquilerdepartamento.setBounds(700, 550, 1000, 650);
+                Alquilerdepartamento.setLocationRelativeTo(null);
+                Alquilerdepartamento.setModal(true);
+                Alquilerdepartamento.setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(this,"usuario o contraseña incorrecta");
             }    
@@ -2603,7 +2596,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         try {
             String jdbcUrl = "jdbc:postgresql://localhost/" + BD;
             String SQL = "Select  idcuartos,nombre,fechainicio,fechafin from " + TablaRenta + " WHERE fechafin >= ? ORDER BY idcuartos ASC";
-            Connection con2 = DriverManager.getConnection(jdbcUrl, "postgres", passErik);
+            Connection con2 = DriverManager.getConnection(jdbcUrl, "postgres", password);
             PreparedStatement statement = con2.prepareStatement(SQL);
             LocalDate fechaActual = LocalDate.now();
             statement.setObject(1, fechaActual);
@@ -2672,7 +2665,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         }*/
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             String insertar = "insert into gasto(idusuario, descripcion , monto, fechagasto)"
                     + "values('" + txtIdUsuarioGasto.getText() + "','" + jcbDescripcionGastos.getToolTipText() + "','" + txtMontoGastos.getText() + "','" + dtGastos.getDate() + "')";
@@ -2686,7 +2679,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     public void mostrar() {
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             ResultSet rs;
             String consulta = "select * from gasto";
@@ -3043,7 +3036,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private void btnGuardarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarEActionPerformed
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             String insertar = "insert into usuario(idrol, nombre , telefono, usuario, contrasena, correo)"
                     + "values('" + txtRol.getText() + "','" + txtNombre1.getText() + "','" + txtTelefono.getText() + "','" + txtUsuario.getText() + "','" + txtContrasena.getText() + "','" + txtCorreo.getText() + "')";
@@ -3175,7 +3168,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     public void guardarpagos() {
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             String insertar = "insert into pago(idrenta, nombre , fechapago, monto, comprobantepago)"
                     + "values('" + txtIdRenta.getText() + "','" + txtNombre.getText() + "','" + FechaPago.getDate() + "','" + txtMonto.getText() + "','" + txtComprobantePago.getText() + "')";
@@ -3189,7 +3182,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     public void mostrarpagos() {
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, passErik);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
             ResultSet rs;
             String consulta = "select * from pago";

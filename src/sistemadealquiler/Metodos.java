@@ -12,10 +12,10 @@ import javax.swing.JOptionPane;
 
 public class Metodos {
 
-    String pass = "heber123.";
+    String pass = "rajkire16";
     String user = "postgres";
     String host = "localhost";
-    String BD = "Renta1";
+    String BD = "Renta";
     Connection con1 = null;
     String nom;
 
@@ -193,10 +193,6 @@ public class Metodos {
             
         } catch (SQLException ex){
             JOptionPane.showMessageDialog(null, ex);
-        }
-        
-        
+        }   
     }
-
-
 }
