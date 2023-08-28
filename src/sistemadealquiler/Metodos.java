@@ -183,14 +183,13 @@ public class Metodos {
 
 
     public void RellenarComboBox(String bd, String tabla, String valor, JComboBox combo){
-        String sql = "select * from gasto";
+        String sql = "select * from categoria";
         try{
             Statement st = conectaBase(bd).createStatement();
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
                 combo.addItem(rs.getString(valor));
-            }
-            
+            }    
         } catch (SQLException ex){
             JOptionPane.showMessageDialog(null, ex);
         }   
