@@ -2716,7 +2716,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         txtMontoGastos.setText("");
     }
 
-    public void guardar() {
+    public void guardarGastos() {
         /*try {
             Statement s = m.conectaBase(bd).createStatement();
             PreparedStatement ps = m.conectaBase(bd).prepareStatement("INSERT INTO " + TablaGastos + "(descripcion,monto,fechagasto) values (?,?,?)");
@@ -2734,8 +2734,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             Class.forName("org.postgresql.Driver");//Registrando el driver
             Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
-            String insertar = "insert into gasto(idusuario, descripcion , monto, fechagasto)"
-                    + "values('" + txtIdUsuarioGasto.getText() + "','" + jcbDescripcionGastos.getSelectedItem() + "','" + txtMontoGastos.getText() + "','" + dtGastos.getDate() + "')";
+            String insertar = "insert into gasto(descripcion , monto, fechagasto)"
+                    + "values('" + jcbDescripcionGastos.getSelectedItem() + "','" + txtMontoGastos.getText() + "','" + dtGastos.getDate() + "')";
             s.executeUpdate(insertar);
             con.close();
         } catch (Exception ex) {
@@ -3137,7 +3137,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     private void btnGuardarGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarGastosActionPerformed
         // TODO add your handling code here:
-        guardar();
+        guardarGastos();
         limpiar();
         mostrar();
     }//GEN-LAST:event_btnGuardarGastosActionPerformed
