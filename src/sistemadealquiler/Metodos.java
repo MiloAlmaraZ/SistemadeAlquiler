@@ -12,10 +12,10 @@ import javax.swing.JOptionPane;
 
 public class Metodos {
 
-    String pass = "heber123.";
+    String pass = "rajkire16";
     String user = "postgres";
     String host = "localhost";
-    String BD = "Renta1";
+    String BD = "Renta";
     Connection con1 = null;
     String nom;
 
@@ -51,14 +51,13 @@ public class Metodos {
         Connection cn = null;
         try {
             Class.forName("org.postgresql.Driver");
-            cn = DriverManager.getConnection("jdbc:postgresql://localhost/"+BD, "postgres", pass);
+            cn = DriverManager.getConnection("jdbc:postgresql://localhost/" + BD, "postgres", pass);
             System.out.println("conectado");
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
         return cn;
     }
-
 
     public int contraseña(String contraseña, String bd) {//Validar contraseña 
         int a = 0;
@@ -171,27 +170,26 @@ public class Metodos {
     }
 
     public void eliminarCliente(String bd, String nombreTabla, int a) {
-            try {
-                Statement s = conectaBase(bd).createStatement();
-                String eliminar = "DELETE FROM " + nombreTabla + " WHERE idcuartos= " + a + ";";
-                s.executeUpdate(eliminar);
-                JOptionPane.showMessageDialog(null, "Se elimino cliente exitosamente");
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, ex);
-            }
+        try {
+            Statement s = conectaBase(bd).createStatement();
+            String eliminar = "DELETE FROM " + nombreTabla + " WHERE idcuartos= " + a + ";";
+            s.executeUpdate(eliminar);
+            JOptionPane.showMessageDialog(null, "Se elimino cliente exitosamente");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
+    }
 
-
-    public void RellenarComboBox(String bd, String tabla, String valor, JComboBox combo){
+    public void RellenarComboBox(String bd, String tabla, String valor, JComboBox combo) {
         String sql = "select * from categoria";
-        try{
+        try {
             Statement st = conectaBase(bd).createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 combo.addItem(rs.getString(valor));
-            }    
-        } catch (SQLException ex){
+            }
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
-        }   
+        }
     }
 }
