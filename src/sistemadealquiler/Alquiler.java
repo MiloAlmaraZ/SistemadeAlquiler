@@ -1,7 +1,16 @@
 package sistemadealquiler;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.util.Date;
 import java.awt.Color;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import static java.lang.Thread.sleep;
@@ -27,6 +36,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+//import itextpdf.text.Document;
+//import javax.swing.text.Document;
 
 public class Alquiler extends javax.swing.JFrame implements Runnable {
 
@@ -1861,6 +1872,11 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         });
 
         btnImprimirUsr.setText("Imprimir");
+        btnImprimirUsr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirUsrActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -3412,8 +3428,9 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     private void tablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosMouseClicked
         int fila = this.tablaUsuarios.getSelectedRow();
+        this.txtIdUsuario.setText(this.tablaUsuarios.getValueAt(fila, 0).toString());
         this.txtRol.setText(this.tablaUsuarios.getValueAt(fila, 1).toString());
-        this.txtNombre.setText(this.tablaUsuarios.getValueAt(fila, 2).toString());
+        this.txtNombreUsr.setText(this.tablaUsuarios.getValueAt(fila, 2).toString());
         this.txtTelefonoUsr.setText(this.tablaUsuarios.getValueAt(fila, 3).toString());
         this.txtUsuario.setText(this.tablaUsuarios.getValueAt(fila, 4).toString());
         this.txtContrasenaUsr.setText(this.tablaUsuarios.getValueAt(fila, 5).toString());
@@ -3698,6 +3715,58 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         BorrarUsr();
     }//GEN-LAST:event_btnBorrarUsrActionPerformed
+
+    private void btnImprimirUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirUsrActionPerformed
+        // TODO add your handling code here:
+        Document documento = new Document();
+        try {
+            String ruta = System.getProperty("user.home");
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Desktop/Usuarios.pdf"));
+
+            Paragraph parrafo = new Paragraph();
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.add("Información de. \n \n");
+            parrafo.setFont(FontFactory.getFont("Tahoma", 10, Font.BOLD, BaseColor.DARK_GRAY));
+
+            documento.open();
+            documento.add(parrafo);
+
+            PdfPTable tablaCliente = new PdfPTable(6);
+            tablaCliente.addCell("ID");
+            tablaCliente.addCell("Nombre");
+            tablaCliente.addCell("Télefono");
+            tablaCliente.addCell("Usuario");
+            tablaCliente.addCell("Contraseña");
+            tablaCliente.addCell("Correo electronico");
+
+            try {
+                int fila = tablaUsuarios.getSelectedRow();
+                String idUsuario = tablaUsuarios.getValueAt(fila, 0).toString();
+                m.conectaBase(BD);
+                Statement s = cn.createStatement();
+                ResultSet rs;
+                String consulta = "select * from usuario";
+                rs = s.executeQuery(consulta);
+                if (rs.next()) {
+                    do {
+                        tablaCliente.addCell(rs.getString(1));
+                        tablaCliente.addCell(rs.getString(3));
+                        tablaCliente.addCell(rs.getString(4));
+                        tablaCliente.addCell(rs.getString(5));
+                        tablaCliente.addCell(rs.getString(6));
+                        tablaCliente.addCell(rs.getString(7));
+                    } while (rs.next());
+                    documento.add(tablaCliente);
+                }
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            documento.close();
+            JOptionPane.showMessageDialog(null, "Reporte creado correctamente.");
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } 
+    }//GEN-LAST:event_btnImprimirUsrActionPerformed
 
     /**
      * @param args the command line arguments

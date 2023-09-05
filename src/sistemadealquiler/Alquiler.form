@@ -2638,6 +2638,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Imprimir"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImprimirUsrActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
