@@ -46,6 +46,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     DefaultTableModel modelo3 = new DefaultTableModel();
     DefaultTableModel modelo4 = new DefaultTableModel();
     DefaultTableModel modelo5 = new DefaultTableModel();
+    DefaultTableModel modelo6 = new DefaultTableModel();
     private JLabel jLabel22;
     private JLabel jLabel24;
     Metodos m = new Metodos();
@@ -87,45 +88,46 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         modelo3 = (DefaultTableModel) pagos_tabla.getModel();
         modelo4 = (DefaultTableModel) TblGastos1.getModel();
         modelo5 = (DefaultTableModel) TblGastos2.getModel();
+        modelo6 = (DefaultTableModel) tablaUsuarios.getModel();
         txtIdUsuario.setEnabled(false);
         limpiarTablausuarios();
-        mostrarTablaUsuarios("");
+        //mostrarTablaUsuarios("");
+        mostrarUsuarios();
         m.RellenarComboBox(BD, TablaCategoria, "Descripcion", jcbDescripcionGastos);
     }
 
-    public void mostrarTablaUsuarios(String valor) {
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("idusuario");
-        modelo.addColumn("rol");
-        modelo.addColumn("nombre");
-        modelo.addColumn("telefono");
-        modelo.addColumn("usuario");
-        modelo.addColumn("contrasena");
-        modelo.addColumn("conrreo");
-        tablaUsuarios.setModel(modelo);
-        String sql = "SELECT * FROM usuario WHERE CONCAT (nombre) LIKE '%" + valor + "%'";
-        String datos[] = new String[7];
-        Statement st;
-        try {
-            st = cn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                datos[0] = rs.getString(1);
-                datos[1] = rs.getString(2);
-                datos[2] = rs.getString(3);
-                datos[3] = rs.getString(4);
-                datos[4] = rs.getString(5);
-                datos[5] = rs.getString(6);
-                datos[6] = rs.getString(7);
-                modelo.addRow(datos);
-            }
-            tablaUsuarios.setModel(modelo);
-        } catch (SQLException e) {
-            System.err.println("Error en el llenado de la tabla" + e);
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-    }
-
+//    public void mostrarTablaUsuarios(String valor) {
+//        DefaultTableModel modelo = new DefaultTableModel();
+//        modelo.addColumn("idusuario");
+//        modelo.addColumn("rol");
+//        modelo.addColumn("nombre");
+//        modelo.addColumn("telefono");
+//        modelo.addColumn("usuario");
+//        modelo.addColumn("contrasena");
+//        modelo.addColumn("conrreo");
+//        tablaUsuarios.setModel(modelo);
+//        String sql = "SELECT * FROM usuario WHERE CONCAT (nombre) LIKE '%" + valor + "%'";
+//        String datos[] = new String[7];
+//        Statement st;
+//        try {
+//            st = cn.createStatement();
+//            ResultSet rs = st.executeQuery(sql);
+//            while (rs.next()) {
+//                datos[0] = rs.getString(1);
+//                datos[1] = rs.getString(2);
+//                datos[2] = rs.getString(3);
+//                datos[3] = rs.getString(4);
+//                datos[4] = rs.getString(5);
+//                datos[5] = rs.getString(6);
+//                datos[6] = rs.getString(7);
+//                modelo.addRow(datos);
+//            }
+//            tablaUsuarios.setModel(modelo);
+//        } catch (SQLException e) {
+//            System.err.println("Error en el llenado de la tabla" + e);
+//            JOptionPane.showMessageDialog(null, "Error");
+//        }
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -180,9 +182,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
         mbContabilidad = new javax.swing.JMenu();
-        miPagos = new javax.swing.JMenuItem();
         miGastos = new javax.swing.JMenuItem();
         JmCorteDeCaja = new javax.swing.JMenuItem();
         mbUsuarios = new javax.swing.JMenu();
@@ -270,6 +270,9 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         txtIdUsuarioGasto = new javax.swing.JTextField();
         jcbDescripcionGastos = new javax.swing.JComboBox<>();
         btnCategoria = new javax.swing.JButton();
+        btnImprimirGastos = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
+        lblBuscar = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TblGastos = new javax.swing.JTable();
         Pagos = new javax.swing.JDialog();
@@ -874,34 +877,9 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         });
         jMenu2.add(jMenuItem2);
 
-        jMenuItem3.setText("Habitaciones");
-        jMenuItem3.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jMenuItem3AncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem3);
-
         jMenuBar1.add(jMenu2);
 
         mbContabilidad.setText("Contabilidad");
-
-        miPagos.setText("Pagos");
-        miPagos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miPagosActionPerformed(evt);
-            }
-        });
-        mbContabilidad.add(miPagos);
 
         miGastos.setText("Gastos");
         miGastos.addActionListener(new java.awt.event.ActionListener() {
@@ -1602,38 +1580,57 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        btnImprimirGastos.setText("Imprimir");
+        btnImprimirGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirGastosActionPerformed(evt);
+            }
+        });
+
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+
+        lblBuscar.setText("Buscar");
+
         javax.swing.GroupLayout pnlGastosLayout = new javax.swing.GroupLayout(pnlGastos);
         pnlGastos.setLayout(pnlGastosLayout);
         pnlGastosLayout.setHorizontalGroup(
             pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlGastosLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblDescripcionGastos)
+                        .addComponent(lblIdUsuarioGasto)
+                        .addGroup(pnlGastosLayout.createSequentialGroup()
+                            .addGap(1, 1, 1)
+                            .addComponent(lblFechaGastos))
+                        .addComponent(lblMontoGastos))
+                    .addComponent(btnGuardarGastos))
                 .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlGastosLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDescripcionGastos)
-                            .addComponent(lblIdUsuarioGasto)
-                            .addGroup(pnlGastosLayout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(lblFechaGastos))
-                            .addComponent(lblMontoGastos))
-                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlGastosLayout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(lblTituloGastos))
-                            .addGroup(pnlGastosLayout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(dtGastos, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                                    .addComponent(txtMontoGastos)
-                                    .addComponent(txtIdUsuarioGasto)
-                                    .addComponent(jcbDescripcionGastos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addGap(37, 37, 37)
+                        .addComponent(lblTituloGastos))
                     .addGroup(pnlGastosLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(btnGuardarGastos)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnCategoria)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dtGastos, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                            .addComponent(txtMontoGastos)
+                            .addComponent(txtIdUsuarioGasto)
+                            .addComponent(jcbDescripcionGastos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlGastosLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(btnCategoria)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnImprimirGastos)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         pnlGastosLayout.setVerticalGroup(
             pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1644,15 +1641,18 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                     .addGroup(pnlGastosLayout.createSequentialGroup()
                         .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlGastosLayout.createSequentialGroup()
-                                .addGap(25, 25, 25)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                                .addComponent(lblDescripcionGastos))
+                            .addGroup(pnlGastosLayout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addComponent(lblBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblIdUsuarioGasto)
-                                    .addComponent(txtIdUsuarioGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtIdUsuarioGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                                .addComponent(jcbDescripcionGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlGastosLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblDescripcionGastos)))
+                                .addComponent(jcbDescripcionGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtMontoGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1660,13 +1660,14 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                         .addGap(18, 18, 18)
                         .addComponent(dtGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlGastosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
                         .addComponent(lblFechaGastos)))
-                .addGap(57, 57, 57)
+                .addGap(38, 38, 38)
                 .addGroup(pnlGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardarGastos)
-                    .addComponent(btnCategoria))
-                .addGap(44, 44, 44))
+                    .addComponent(btnCategoria)
+                    .addComponent(btnImprimirGastos))
+                .addGap(63, 63, 63))
         );
 
         TblGastos.setModel(new javax.swing.table.DefaultTableModel(
@@ -1683,7 +1684,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         Gastos.getContentPane().setLayout(GastosLayout);
         GastosLayout.setHorizontalGroup(
             GastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
             .addComponent(pnlGastos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         GastosLayout.setVerticalGroup(
@@ -1692,8 +1693,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 .addGap(1, 1, 1)
                 .addComponent(pnlGastos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                .addGap(22, 22, 22))
         );
 
         pagos_titulo.setText("Pagos");
@@ -1961,7 +1962,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "IdUsuario", "Rol", "Nombre", "Telefono", "Usuario", "Contraseña", "Correo"
             }
         ));
         tablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1976,37 +1977,39 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addGap(349, 349, 349)
-                .addComponent(jLabel25)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel25)
+                        .addContainerGap(394, Short.MAX_VALUE))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane5)
+                        .addContainerGap())))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel25)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(9, 9, 9)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout UsuariosLayout = new javax.swing.GroupLayout(Usuarios.getContentPane());
         Usuarios.getContentPane().setLayout(UsuariosLayout);
         UsuariosLayout.setHorizontalGroup(
             UsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(UsuariosLayout.createSequentialGroup()
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         UsuariosLayout.setVerticalGroup(
             UsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2771,8 +2774,8 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         try {
             String usuario = txtLoginUsuario.getText();
             String contrasena = String.valueOf(txtLoginPass.getPassword());
-            String query = "SELECT usuario.usuario, usuario.contrasena, rol.rol, rol.prol, rol.pcontratos,rol.parrendadores, rol.ppagos, rol.pgastos, rol.pusuarios, rol.phabitaciones FROM usuario "
-                    + "JOIN rol ON usuario.idrol = rol.idrol WHERE usuario='" + usuario + "' and contrasena='" + contrasena + "'";
+            String query = "SELECT usuario.nombre, usuario.contrasena, rol.rol, rol.prol, rol.pcontratos,rol.parrendadores, rol.ppagos, rol.pgastos, rol.pusuarios, rol.phabitaciones FROM usuario "
+                    + "JOIN rol ON usuario.idrol = rol.idrol WHERE nombre='" + usuario + "' and contrasena='" + contrasena + "'";
             Statement st = m.conexion().createStatement();
             ResultSet rs = st.executeQuery(query);
 
@@ -2794,17 +2797,17 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                     jMenuItem1.setVisible(false);
                 }
                 if (p4 == 0) {
-                    miPagos.setVisible(false);
-                }
-                if (p5 == 0) {
                     miGastos.setVisible(false);
                 }
-                if (p6 == 0) {
+                if (p5 == 0) {
                     ItemUsuarios.setVisible(false);
                 }
-                if (p7 == 0) {
-                    jMenuItem3.setVisible(false);
-                }
+//                if (p6 == 0) {
+//                    ItemUsuarios.setVisible(false);
+//                }
+//                if (p7 == 0) {
+//                    jMenuItem3.setVisible(false);
+//                }
                 Alquilerdepartamento.setBounds(700, 550, 1000, 650);
                 Alquilerdepartamento.setLocationRelativeTo(null);
                 Alquilerdepartamento.setModal(true);
@@ -2901,10 +2904,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         }
     }
 
-    void limpiar() {
-        txtMontoGastos.setText("");
-    }
-
     public void guardarGastos() {
         /*try {
             Statement s = m.conectaBase(bd).createStatement();
@@ -2932,7 +2931,36 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         }
     }
 
-    public void mostrar() {
+    public void mostrarGastos1() {
+        try {
+            Class.forName("org.postgresql.Driver");//Registrando el driver
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Statement s = con.createStatement();
+            ResultSet rs;
+            String consulta = "select * from gasto";
+            rs = s.executeQuery(consulta);
+            while (rs.next()) {
+                //Se crea un arreglo de tipo objeto
+                Object[] objetos = new Object[3];
+                //Se le asignan los datos a la respectiva columna de la tabla
+                objetos[0] = rs.getString(4);
+                objetos[1] = rs.getString(3);
+                objetos[2] = rs.getString(5);
+
+                //Añade las filas que se vayan generando
+                modelo2.addRow(objetos);
+                //modelo4.addRow(objetos);
+            }
+            rs.close();
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        TblGastos.setModel(modelo2);
+        //TblGastos1.setModel(modelo4);
+    }
+
+    public void mostrarGastos2() {
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
             Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
@@ -2948,22 +2976,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 objetos[1] = rs.getString(3);
                 objetos[2] = rs.getString(5);
                 objetos[3] = rs.getString(4);
-                //objetos[4]=rs.getString(5);
-                //objetos[5]=rs.getString(6);
 
                 //Añade las filas que se vayan generando
                 modelo2.addRow(objetos);
                 modelo4.addRow(objetos);
-                //Muestra la tabla con las filas y datos de las columnas generadas
-                //TblGastos.setModel(modelo2);
-
-                /*System.out.println("Id: " + rs.getString(1));
-                       System.out.println("Nombre: " + rs.getString(2));
-                       System.out.println("Edad: " + rs.getString(3));
-                       System.out.println("Matricula: " + rs.getString(4));
-                       System.out.println("Carrera : " + rs.getString(5));
-                       System.out.println("Contraseña : " + rs.getString(6));
-                       System.out.println("\n");*/
             }
             rs.close();
             con.close();
@@ -2974,55 +2990,54 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         TblGastos1.setModel(modelo4);
     }
 
-    public void guardarpagos() {
-        try {
-            Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
-            Statement s = con.createStatement();
-            String insertar = "insert into pago(idrenta, nombre , fechapago, monto, comprobantepago)"
-                    + "values('" + txtIdRenta.getText() + "','" + txtNombre.getText() + "','" + FechaPago.getDate() + "','" + txtMonto.getText() + "','" + txtComprobantePago.getText() + "')";
-            s.executeUpdate(insertar);
-            con.close();
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-    }
-
-    public void mostrarpagos() {
-        try {
-            Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
-            Statement s = con.createStatement();
-            ResultSet rs;
-            String consulta = "select * from pago";
-            rs = s.executeQuery(consulta);
-            while (rs.next()) {
-                //Se crea un arreglo de tipo objeto
-                Object[] objetos = new Object[5];
-                //Se le asignan los datos a la respectiva columna de la tabla
-                objetos[0] = rs.getString(2);
-                objetos[1] = rs.getString(3);
-                objetos[2] = rs.getString(4);
-                objetos[3] = rs.getString(5);
-                objetos[4] = rs.getString(6);
-                //objetos[5]=rs.getString(6);
-                System.out.println("estos son los datos de dinero" + objetos[3]);
-
-                int td = rs.getInt(5);
-
-                auxtd = auxtd + td;
-                System.out.println("el valor de td es" + td);
-                modelo3.addRow(objetos);
-            }
-            System.out.println("el valor de auxtd es" + auxtd);
-            rs.close();
-            con.close();
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-        pagos_tabla.setModel(modelo3);
-    }
-
+//    public void guardarpagos() {
+//        try {
+//            Class.forName("org.postgresql.Driver");//Registrando el driver
+//            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+//            Statement s = con.createStatement();
+//            String insertar = "insert into pago(idrenta, nombre , fechapago, monto, comprobantepago)"
+//                    + "values('" + txtIdRenta.getText() + "','" + txtNombre.getText() + "','" + FechaPago.getDate() + "','" + txtMonto.getText() + "','" + txtComprobantePago.getText() + "')";
+//            s.executeUpdate(insertar);
+//            con.close();
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//        }
+//    }
+//
+//    public void mostrarpagos() {
+//        try {
+//            Class.forName("org.postgresql.Driver");//Registrando el driver
+//            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+//            Statement s = con.createStatement();
+//            ResultSet rs;
+//            String consulta = "select * from pago";
+//            rs = s.executeQuery(consulta);
+//            while (rs.next()) {
+//                //Se crea un arreglo de tipo objeto
+//                Object[] objetos = new Object[5];
+//                //Se le asignan los datos a la respectiva columna de la tabla
+//                objetos[0] = rs.getString(2);
+//                objetos[1] = rs.getString(3);
+//                objetos[2] = rs.getString(4);
+//                objetos[3] = rs.getString(5);
+//                objetos[4] = rs.getString(6);
+//                //objetos[5]=rs.getString(6);
+//                System.out.println("estos son los datos de dinero" + objetos[3]);
+//
+//                int td = rs.getInt(5);
+//
+//                auxtd = auxtd + td;
+//                System.out.println("el valor de td es" + td);
+//                modelo3.addRow(objetos);
+//            }
+//            System.out.println("el valor de auxtd es" + auxtd);
+//            rs.close();
+//            con.close();
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//        }
+//        pagos_tabla.setModel(modelo3);
+//    }
     public void horaActual() {
         Calendar ca = new GregorianCalendar();
         Date da = new Date();
@@ -3033,38 +3048,128 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }
 
     public void BorrarUsr() {
-        int fila = tablaUsuarios.getSelectedRow();
-        String idUsuario = tablaUsuarios.getValueAt(fila, 0).toString();
-        int n = JOptionPane.showConfirmDialog(null, "Desea eliminar registro", "Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (n == JOptionPane.YES_NO_OPTION) {
-            try {
-                m.conectaBase(BD);
-                Statement s = cn.createStatement();
-                String borrar = "Delete from usuario where idusuario='" + idUsuario + "'";
-                s.executeUpdate(borrar);
-                cn.close();
-            } catch (Exception ex) {
-                System.out.println(ex);
-                //java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        if (tablaUsuarios.getSelectedRow() != -1) {
+            int fila = tablaUsuarios.getSelectedRow();
+            String idUsuario = tablaUsuarios.getValueAt(fila, 0).toString();
+            int n = JOptionPane.showConfirmDialog(null, "Desea eliminar registro", "Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (n == JOptionPane.YES_NO_OPTION) {
+                try {
+                    m.conectaBase(BD);
+                    Statement s = cn.createStatement();
+                    String borrar = "Delete from usuario where idusuario='" + idUsuario + "'";
+                    s.executeUpdate(borrar);
+                    cn.close();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                    //java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "error, no hay fila seleccionada");
         }
     }
 
     public void ModificarDatosUsr() {
         int fila = tablaUsuarios.getSelectedRow();
         String idUsuario = tablaUsuarios.getValueAt(fila, 0).toString();
+        if (tablaUsuarios.getSelectedRow() != -1) {
+            try {
+                Class.forName("org.postgresql.Driver");//Registrando el driver
+                Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+                Statement s = con.createStatement();
+                String modificar = "Update usuario set idrol='" + txtRol.getText() + "',Nombre='" + txtNombreUsr.getText() + "',Telefono='" + txtTelefonoUsr.getText()
+                        + "',Usuario ='" + txtUsuario.getText() + "',Contrasena ='" + txtContrasenaUsr.getText() + "',Correo ='" + txtCorreoUsr.getText() + "'WHERE idusuario='" + idUsuario + "'";
+                s.executeUpdate(modificar);
+                con.close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+                //java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "error, no hay fila seleccionada");
+        }
+    }
+
+    private void limpiaTablaGastos() {
+        int a = modelo2.getRowCount();
+
+        while (a != 0) { // Ciclo para Borrar la Tabla 1
+            if (a != 0) {
+                modelo2.removeRow(0);
+            }
+            a = modelo2.getRowCount();
+        }
+    }
+
+    public void guardarUsuarios() {
         try {
             Class.forName("org.postgresql.Driver");//Registrando el driver
             Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
             Statement s = con.createStatement();
-            String modificar = "Update usuario set idrol='" + txtRol.getText() + "',Nombre='" + txtNombreUsr.getText() + "',Telefono='" + txtTelefonoUsr.getText()
-                    + "',Usuario ='" + txtUsuario.getText() + "',Contrasena ='" + txtContrasenaUsr.getText() + "',Correo ='" + txtCorreoUsr.getText() + "'WHERE idusuario='" + idUsuario + "'";
-            s.executeUpdate(modificar);
+            String insertar = "insert into usuario(idrol, nombre , telefono, usuario, contrasena, correo)"
+                    + "values('" + txtRol.getText() + "','" + txtNombreUsr.getText() + "','" + txtTelefonoUsr.getText() + "','" + txtUsuario.getText() + "','" + txtContrasenaUsr.getText() + "','" + txtCorreoUsr.getText() + "')";
+            s.executeUpdate(insertar);
             con.close();
         } catch (Exception ex) {
             System.out.println(ex);
-            //java.util.logging.Logger.getLogger(Registro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+    }
+
+    public void mostrarUsuarios() {
+        try {
+            Class.forName("org.postgresql.Driver");//Registrando el driver
+            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+            Statement s = con.createStatement();
+            ResultSet rs;
+            String consulta = "select * from usuario";
+            rs = s.executeQuery(consulta);
+            while (rs.next()) {
+                //Se crea un arreglo de tipo objeto
+                Object[] objetos = new Object[7];
+                //Se le asignan los datos a la respectiva columna de la tabla
+                objetos[0] = rs.getString(1);
+                objetos[1] = rs.getString(2);
+                objetos[2] = rs.getString(3);
+                objetos[3] = rs.getString(4);
+                objetos[4] = rs.getString(5);
+                objetos[5] = rs.getString(6);
+                objetos[6] = rs.getString(7);
+
+                //Añade las filas que se vayan generando
+                modelo6.addRow(objetos);
+            }
+            rs.close();
+            con.close();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        tablaUsuarios.setModel(modelo6);
+    }
+
+    private void limpiaTablaUsuarios() {
+        int a = modelo6.getRowCount();
+
+        while (a != 0) { // Ciclo para Borrar la Tabla 1
+            if (a != 0) {
+                modelo6.removeRow(0);
+            }
+            a = modelo6.getRowCount();
+        }
+    }
+    
+    void limpiarGastos() {
+        txtMontoGastos.setText("");
+        dtGastos.setToolTipText("");
+    }
+    
+    void limpiarUsuarios(){
+        txtIdUsuario.setText("");
+        txtRol.setText("");
+        txtNombreUsr.setText("");
+        txtTelefonoUsr.setText("");
+        txtTelefonoUsr.setText("");
+        txtContrasenaUsr.setText("");
+        txtCorreoUsr.setText("");
     }
 
 
@@ -3087,18 +3192,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         Contratos.setModal(true);
         Contratos.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem3AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMenuItem3AncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3AncestorAdded
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        Habitaciones.setBounds(700, 550, 700, 600);
-        Habitaciones.setLocationRelativeTo(null);
-        Habitaciones.setModal(true);
-        Habitaciones.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         if (btn2.getText().equals("Disponible")) {
@@ -3259,7 +3352,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
             consultarRenta();
         } else {
 
-            JOptionPane.showMessageDialog(null, "error no hay fila seleccionada");
+            JOptionPane.showMessageDialog(null, "error, no hay fila seleccionada");
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -3356,9 +3449,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     private void btnGuardarGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarGastosActionPerformed
         // TODO add your handling code here:
+        limpiaTablaGastos();
         guardarGastos();
-        limpiar();
-        mostrar();
+        limpiarGastos();
+        mostrarGastos1();
     }//GEN-LAST:event_btnGuardarGastosActionPerformed
 
     private void miGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGastosActionPerformed
@@ -3368,15 +3462,9 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
         Gastos.setVisible(true);
     }//GEN-LAST:event_miGastosActionPerformed
 
-    private void miPagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPagosActionPerformed
-        Pagos.setBounds(0, 0, 600, 500);
-        Pagos.setModal(true);
-        Pagos.setVisible(true);
-    }//GEN-LAST:event_miPagosActionPerformed
-
     private void btnGuardarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPagoActionPerformed
-        guardarpagos();
-        mostrarpagos();
+//        guardarpagos();
+//        mostrarpagos();
     }//GEN-LAST:event_btnGuardarPagoActionPerformed
 
     private void txtRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRolActionPerformed
@@ -3384,17 +3472,22 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_txtRolActionPerformed
 
     private void btnGuardarUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarUsrActionPerformed
-        try {
-            Class.forName("org.postgresql.Driver");//Registrando el driver
-            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
-            Statement s = con.createStatement();
-            String insertar = "insert into usuario(idrol, nombre , telefono, usuario, contrasena, correo)"
-                    + "values('" + txtRol.getText() + "','" + txtNombreUsr.getText() + "','" + txtTelefonoUsr.getText() + "','" + txtUsuario.getText() + "','" + txtContrasenaUsr.getText() + "','" + txtCorreoUsr.getText() + "')";
-            s.executeUpdate(insertar);
-            con.close();
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
+//        try {
+//            Class.forName("org.postgresql.Driver");//Registrando el driver
+//            Connection con = DriverManager.getConnection("jdbc:postgresql://" + host + "/" + BD, user, password);//En el objecto con estamos almacenando una conexion. 1 Ruta, 2 El usuario, 3 contraseña.
+//            Statement s = con.createStatement();
+//            String insertar = "insert into usuario(idrol, nombre , telefono, usuario, contrasena, correo)"
+//                    + "values('" + txtRol.getText() + "','" + txtNombreUsr.getText() + "','" + txtTelefonoUsr.getText() + "','" + txtUsuario.getText() + "','" + txtContrasenaUsr.getText() + "','" + txtCorreoUsr.getText() + "')";
+//            s.executeUpdate(insertar);
+//            con.close();
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//        }
+        limpiaTablaUsuarios();
+        guardarUsuarios();
+        limpiarUsuarios();
+        mostrarUsuarios();
+
     }//GEN-LAST:event_btnGuardarUsrActionPerformed
 
     private void btnActualizarUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarUsrActionPerformed
@@ -3423,7 +3516,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 //            System.err.println("Error al actualizar..."+e);
 //            JOptionPane.showMessageDialog(null,"Error al actualizar");
 //        }
+        limpiaTablaUsuarios();
         ModificarDatosUsr();
+        limpiarUsuarios();
+        mostrarUsuarios();
     }//GEN-LAST:event_btnActualizarUsrActionPerformed
 
     private void tablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosMouseClicked
@@ -3598,9 +3694,9 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }
 
     private void JmCorteDeCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JmCorteDeCajaActionPerformed
-        mostrar();
+        mostrarGastos2();
         contartotalefectivo();
-        CorteDeCaja.setBounds(0, 0, 400, 300);
+        CorteDeCaja.setBounds(0, 0, 1000, 600);
         CorteDeCaja.setModal(true);
         CorteDeCaja.setVisible(true);
     }//GEN-LAST:event_JmCorteDeCajaActionPerformed
@@ -3639,7 +3735,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     }
 
     private void btnmostrarcorteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmostrarcorteActionPerformed
-        mostrar();
+        mostrarGastos2();
         contartotalefectivo();
     }//GEN-LAST:event_btnmostrarcorteActionPerformed
 
@@ -3713,7 +3809,10 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
     private void btnBorrarUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarUsrActionPerformed
         // TODO add your handling code here:
+        limpiaTablaUsuarios();
         BorrarUsr();
+        limpiarUsuarios();
+        mostrarUsuarios();
     }//GEN-LAST:event_btnBorrarUsrActionPerformed
 
     private void btnImprimirUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirUsrActionPerformed
@@ -3725,19 +3824,19 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
 
             Paragraph parrafo = new Paragraph();
             parrafo.setAlignment(Paragraph.ALIGN_CENTER);
-            parrafo.add("Información de. \n \n");
+            parrafo.add("Información de los usuarios. \n \n");
             parrafo.setFont(FontFactory.getFont("Tahoma", 10, Font.BOLD, BaseColor.DARK_GRAY));
 
             documento.open();
             documento.add(parrafo);
 
-            PdfPTable tablaCliente = new PdfPTable(6);
-            tablaCliente.addCell("ID");
-            tablaCliente.addCell("Nombre");
-            tablaCliente.addCell("Télefono");
-            tablaCliente.addCell("Usuario");
-            tablaCliente.addCell("Contraseña");
-            tablaCliente.addCell("Correo electronico");
+            PdfPTable tablaUsuario = new PdfPTable(6);
+            tablaUsuario.addCell("ID");
+            tablaUsuario.addCell("Nombre");
+            tablaUsuario.addCell("Télefono");
+            tablaUsuario.addCell("Usuario");
+            tablaUsuario.addCell("Contraseña");
+            tablaUsuario.addCell("Correo electronico");
 
             try {
                 int fila = tablaUsuarios.getSelectedRow();
@@ -3749,24 +3848,35 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
                 rs = s.executeQuery(consulta);
                 if (rs.next()) {
                     do {
-                        tablaCliente.addCell(rs.getString(1));
-                        tablaCliente.addCell(rs.getString(3));
-                        tablaCliente.addCell(rs.getString(4));
-                        tablaCliente.addCell(rs.getString(5));
-                        tablaCliente.addCell(rs.getString(6));
-                        tablaCliente.addCell(rs.getString(7));
+                        tablaUsuario.addCell(rs.getString(1));
+                        tablaUsuario.addCell(rs.getString(3));
+                        tablaUsuario.addCell(rs.getString(4));
+                        tablaUsuario.addCell(rs.getString(5));
+                        tablaUsuario.addCell(rs.getString(6));
+                        tablaUsuario.addCell(rs.getString(7));
                     } while (rs.next());
-                    documento.add(tablaCliente);
+                    documento.add(tablaUsuario);
                 }
             } catch (Exception ex) {
                 System.out.println(ex);
             }
+
             documento.close();
             JOptionPane.showMessageDialog(null, "Reporte creado correctamente.");
         } catch (Exception ex) {
             System.out.println(ex);
-        } 
+        }
     }//GEN-LAST:event_btnImprimirUsrActionPerformed
+
+    private void btnImprimirGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirGastosActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_btnImprimirGastosActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
     /**
      * @param args the command line arguments
@@ -3915,6 +4025,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btnGuardarPago;
     private javax.swing.JButton btnGuardarRol;
     private javax.swing.JButton btnGuardarUsr;
+    private javax.swing.JButton btnImprimirGastos;
     private javax.swing.JButton btnImprimirUsr;
     private javax.swing.JButton btnNuevaCategoria;
     private javax.swing.JButton btnenviartodo;
@@ -3992,7 +4103,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -4048,6 +4158,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JComboBox<String> jcbDescripcionGastos;
+    private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblDescripcionGastos;
     private javax.swing.JLabel lblFechaGastos;
@@ -4060,7 +4171,6 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JMenu mbContabilidad;
     private javax.swing.JMenu mbUsuarios;
     private javax.swing.JMenuItem miGastos;
-    private javax.swing.JMenuItem miPagos;
     private javax.swing.JLabel pagos_comprobante;
     private javax.swing.JLabel pagos_fecha_pago;
     private javax.swing.JLabel pagos_idrenta;
@@ -4092,6 +4202,7 @@ public class Alquiler extends javax.swing.JFrame implements Runnable {
     private javax.swing.JSeparator pass;
     private javax.swing.JPanel pnlGastos;
     private javax.swing.JTable tablaUsuarios;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtComprobantePago;
     private javax.swing.JTextField txtContrasenaUsr;
